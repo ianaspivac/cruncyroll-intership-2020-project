@@ -12,12 +12,18 @@ Vue.config.productionTip = false;
 const routes = [
   { path: "/", component: HomePage },
   { path: "/search", component: SearchPage },
-  { path: "/category-page/:id", component: CategoryPage },
+  { path: "/all", component: CategoryPage },
+  { path: "/most-popular", component: CategoryPage },
+  { path: "/newest", component: CategoryPage },
+  { path: "/recently-updated", component: CategoryPage },
   { path: "/show-page", component: ShowPage }
 ];
 const router = new VueRouter({
   mode: "history",
-  routes: routes
+  routes: routes,
+  scrollBehavior(){
+    return{x:0,y:0}
+  }
 });
 
 new Vue({

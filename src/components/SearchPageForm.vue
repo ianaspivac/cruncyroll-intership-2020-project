@@ -36,7 +36,7 @@ height:50px;
 width:100%;
 }
 .search-page-continer{
-  
+  margin-top:10px;
 display:flex;
 align-items: center;
 justify-content: center;
@@ -44,6 +44,7 @@ max-width:var(--total-width);
 width:97vw;
 height:100%;
 background:var(--second-color);
+box-shadow: 0px 5px 22px -9px rgba(0, 0, 0, 0.75);
 }
 #search-box{
 border:none;

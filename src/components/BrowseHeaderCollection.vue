@@ -28,8 +28,6 @@ export default {
   font-size: 1.5em;
   height: 1.7em;
   margin-bottom: 20px;
-  -webkit-box-shadow: 0px 5px 22px -9px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 5px 22px -9px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 5px 22px -9px rgba(0, 0, 0, 0.75);
 }
 .collection-header h2,

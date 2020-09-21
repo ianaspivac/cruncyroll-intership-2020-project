@@ -1,8 +1,8 @@
 <template>
-    <footer><div class="footer-container"><div class="links"><ul><li><router-link to="all-animes">All Animes</router-link></li>
-    <li><router-link to="/category-page/most-popular">Most Popular</router-link></li>
-    <li><router-link to="/category-page/newest">Newest</router-link></li>
-    <li><router-link to="/category-page/recently-updated">Recently Updated</router-link></li>
+    <footer><div class="footer-container"><div class="links"><ul><li><router-link to="/all">All Animes</router-link></li>
+    <li><router-link to="/most-popular">Most Popular</router-link></li>
+    <li><router-link to="/newest">Newest</router-link></li>
+    <li><router-link to="/recently-updated">Recently Updated</router-link></li>
     </ul></div>
     <div class="copyright">© Copyright 2020<br>All rights reserved.<br> Powered by Spivac Iana in the context of Cruncyroll Intership.</div></div>
     </footer>

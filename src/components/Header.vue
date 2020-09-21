@@ -8,13 +8,13 @@
         <nav class="navigation">
           <ul>
             <li>
-              <router-link class="nav-links" to="/category-page/most-popular">Most Popular</router-link>
+              <router-link class="nav-links" to="/most-popular">Most Popular</router-link>
             </li>
             <li>
-              <router-link class="nav-links" to="/category-page/newest">Newest</router-link>
+              <router-link class="nav-links" to="/newest">Newest</router-link>
             </li>
             <li>
-              <router-link class="nav-links" to="/category-page/recently-updated">Recently Updated</router-link>
+              <router-link class="nav-links" to="/recently-updated">Recently Updated</router-link>
             </li>
             <li>
               <router-link class="search-icon" to="/search">

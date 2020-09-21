@@ -44,7 +44,7 @@ export default {
   margin-right: 10px;
 }
 .portrait {
-  margin: 10px 5px 5px 10px;
+  margin: 20px 5px 5px 10px;
   max-height: 71%;
   height: 30vh;
 }
@@ -53,12 +53,10 @@ export default {
   max-width: 28em;
   width:95vw;
   height: 16em;
-  -webkit-box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.58);
-  -moz-box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.58);
   box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.58);
   color: rgb(0, 0, 0);
   margin: 5px;
-  font-weight: 700;
+  
 }
 .info-anime {
   margin-top: 10px;
@@ -67,7 +65,7 @@ export default {
   justify-content:center;
   flex-direction: column;
   text-align: left;
-  padding: 0px;
+  padding: 5px;
   max-width: 300px;
 }
 .rating {
@@ -93,14 +91,15 @@ export default {
   transition: all 0.15s;
 }
 .info-anime .synopsis {
-  font-size: 13px;
+  font-size: 12px;
   overflow: hidden;
   overflow-wrap: break-word;
   text-overflow: ellipsis;
-  max-width: 300px;
+  max-width: 280px;
   height: 117px;
 }
 .info-anime .search-card-title {
+  font-weight: 700;
   font-size: 20px;
   height: 60px;
   overflow: hidden;
