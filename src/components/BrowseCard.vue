@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link to="#">
+    <router-link to="/show-page">
       <div class="browse-card">
         <img class="portrait" :src="`${browseCardImg}`" alt="Anime Poster">
         <span>{{browseCardTitle}}</span>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+
 export default {
   name: "BrowseCard",
   data: function() {
@@ -19,6 +20,7 @@ export default {
       browseCardTitle: "The Promised Neverland"
     };
   }
+        
 };
 </script>
 

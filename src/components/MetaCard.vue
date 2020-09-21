@@ -4,7 +4,11 @@
       src="https://img.discogs.com/aIvmyjPAsJXKfCG739oBw85WuOQ=/fit-in/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/A-2064545-1508873646-6197.jpeg.jpg"
       alt="cast"
     >
-    <div class="cast-info">{{nameCast}}</div>
+    <div class="cast-info">
+      {{nameCast}}
+      <br>
+      {{role}}
+    </div>
   </div>
 </template>
 
@@ -12,7 +16,7 @@
 export default {
   name: "MetaCard",
   data: function() {
-    return { nameCast: "Mariya Ise" };
+    return { nameCast: "Mariya Ise", role: "Name" };
   }
 };
 </script>
@@ -29,14 +33,16 @@ height:150px;
 }
 .show-episode-card img{
 margin:10px;
-width:120px;
+height:87%;
+object-fit:cover;
 }
 .cast-info{
-   white-space: nowrap;
+   white-space: wrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width:calc(var(--total-width) / 4 - 20px);
-  max-height:40px;
+  word-break:break-word;
+  max-width:150px;
+  max-height:120px;
   font-weight:1000;
   line-height: 20px;
   text-align:left;
