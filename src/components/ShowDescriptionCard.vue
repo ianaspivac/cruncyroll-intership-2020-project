@@ -65,7 +65,7 @@ background:var(--second-color);
 padding:5px;
 }
 .text-info .rating, .text-info .synopsis{
-font-size:15px;
+font-size:17px;
 margin:10px;
 }
 .text-info .synopsis{

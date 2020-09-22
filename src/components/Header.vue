@@ -41,8 +41,6 @@ header {
   background: var(--purple-theme);
   display: flex;
   justify-content: center;
-  -webkit-box-shadow: 0px 20px 43px -25px rgba(0, 0, 0, 0.43);
-  -moz-box-shadow: 0px 20px 43px -25px rgba(0, 0, 0, 0.43);
   box-shadow: 0px 20px 43px -25px rgba(0, 0, 0, 0.43);
 }
 .header-container {
@@ -56,10 +54,9 @@ header {
 }
 .nav-links {
   text-decoration: none;
-  padding: 10px;
+  margin: 10px;
   color: var(--color-text);
   font-size: 15px;
-  max-width: 50px;
   height: 100px;
 }
 .nav-links:hover {
@@ -73,6 +70,7 @@ nav {
 }
 
 ul {
+  flex-wrap:wrap;   
   margin-top: 25px;
   display: flex;
 }

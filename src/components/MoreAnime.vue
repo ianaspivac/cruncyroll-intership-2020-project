@@ -3,7 +3,7 @@
     <div class="more-anime">
       <div class="dark-shade">
         <div class="more-anime-text">
-          <h2>Looking for more anime?</h2>Take a look at our full catalog!
+          <h2>Looking for more anime?</h2>Take a look at our full catalogue!
         </div>
         <button>Discover</button>
       </div>

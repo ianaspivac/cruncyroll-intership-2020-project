@@ -5,10 +5,10 @@
     </div>
     <div class="container">
       <section id="hero-id">
-        <img :src="`${animeCover}`">
+        <img :src='`${animeInfo.animeCover}`'>
         <div class="container-hero">
-          <h1>{{AnimeTitle}}</h1>
-          <p>{{InfoAbout}}</p>
+          <h1>{{animeInfo.animeTitle}}</h1>
+          <p>{{animeInfo.infoAbout}}</p>
           <button>View</button>
         </div>
       </section>
@@ -17,16 +17,29 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "HeroSection",
   data: function() {
     return {
-      animeCover:
-        "https://www.whats-on-netflix.com/wp-content/uploads/2020/08/The-Promised-Neverland-is-coming-to-netflix-in-september-2020.jpg",
-      AnimeTitle: "The Promised Neverland",
-      InfoAbout:
-        "A group of the smartest kids at a seemingly perfect orphanage uncover its dark truth when they break a rule to never leave the orphanage grounds. Once the truth is discovered, they begin to plan an escape to save all of the childrend."
+      animeInfo: {
+        animeCover: "",
+        animeTitle: "",
+        infoAbout: ""
+      }
     };
+  },
+  created: function() {
+    const that = this;
+    axios
+      .get("https://kitsu.io/api/edge/trending/anime")
+      .then(function(response) {
+        that.data = response.data.data[0].attributes;
+      that.animeInfo.animeCover = that.data.coverImage.small;
+       that.animeInfo.animeTitle = that.data.canonicalTitle;
+       that.animeInfo.infoAbout = that.data.description;
+     
+      });
   }
 };
 </script>
@@ -80,7 +93,7 @@ object-fit: cover;
 }
 
 #hero-id h1 { 
-  margin-top: 50px;
+  margin-top: 20px;
   margin-bottom: 10px;
   font-weight:700;
   font-size: var(--title-hero);
@@ -92,12 +105,14 @@ object-fit: cover;
 #hero-id p,h1{
   overflow:hidden;
   overflow-wrap: break-word;
+ 
   color:var(--color-text);
  
 }
 #hero-id p{
+   text-overflow: ellipsis;
   font-size:calc(var(--title-hero) / 2);
-  max-height:calc(var(--title-hero) * 5.5);
+  max-height:calc(var(--title-hero) * 7);
   text-align: left;
   line-height:1.2;
   margin-left:var(--hero-text-align);

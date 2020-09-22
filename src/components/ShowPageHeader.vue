@@ -26,8 +26,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .trailer-section iframe {
-  margin: 10px;
-  width: 100vw;
+  margin-top: 10px;
+margin-bottom: 10px;
+  width: 97vw;
   height: 400px;
   object-fit: cover;
   max-width: var(--total-width);
