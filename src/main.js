@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import App from "./App.vue";
-import Axios from "axios"
+import store from "./store/store";
 import HomePage from "./HomePage.vue";
 import SearchPage from "./SearchPage.vue";
 import CategoryPage from "./CategoryPage.vue";
@@ -29,5 +29,5 @@ const router = new VueRouter({
 
 new Vue({
   render: (h) => h(App),
-  router
+  router,store
 }).$mount("#app");

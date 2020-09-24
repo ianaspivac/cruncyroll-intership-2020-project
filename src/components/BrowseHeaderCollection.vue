@@ -2,7 +2,7 @@
   <div class="collection-header">
     <h2>{{topicCollectionName}}</h2>
     <span class="see-more">
-      <router-link tag="span" to="#">See More ></router-link>
+      <router-link tag="span" to="/most-popular">See More ></router-link>
     </span>
   </div>
 </template>

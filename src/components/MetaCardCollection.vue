@@ -31,7 +31,7 @@ export default {
   margin: 10px;
   font-size: 20px;
   text-align: left;
-  font-weight:1000;
+  font-weight: 1000;
 }
 .meta-cards-collection {
   display: flex;

@@ -3,19 +3,17 @@
     <section class="collection-container">
       <BrowseHeaderCollection :topicCollectionName="topicCollection"/>
       <div class="cards-container">
-        <BrowseCard :animeTitle="`${animeList[0].title}`" :animePoster="`${animeList[0].poster}`"/>
-        <BrowseCard :animeTitle="`${animeList[0].title}`" :animePoster="`${animeList[0].poster}`"/>
-        <BrowseCard :animeTitle="`${animeList[0].title}`" :animePoster="`${animeList[0].poster}`"/>
-        <BrowseCard :animeTitle="`${animeList[0].title}`" :animePoster="`${animeList[0].poster}`"/>
-        <BrowseCard :animeTitle="`${animeList[0].title}`" :animePoster="`${animeList[0].poster}`"/>
-        <BrowseCard :animeTitle="`${animeList[0].title}`" :animePoster="`${animeList[0].poster}`"/>
+        <BrowseCard
+          :animeTitle="category.title"
+          :animePoster="category.image"
+          :animeId="category.id"
+        />
       </div>
     </section>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import BrowseCard from "./BrowseCard.vue";
 import BrowseHeaderCollection from "./BrowseHeaderCollection.vue";
 export default {
@@ -25,45 +23,25 @@ export default {
     BrowseHeaderCollection
   },
   props: { topicCollection: String },
-  data: function() {
-    return {
-      animeList: [{ title: "", poster: "", id: "" }]
-    };
-  },
+
   created: function() {
     if (this.topicCollection === "Most Popular") {
-      const that = this;
-      axios
-        .get("https://kitsu.io/api/edge/anime?sort=popularityRank")
-        .then(function(response) {
-          that.data = response.data.data;
-          that.animeList[0].title = that.data[0].attributes.canonicalTitle;
-          that.animeList[0].poster = that.data[0].attributes.posterImage.small;
-
-          for (let i = 0; i < 6; i++) {}
-        });
+      this.$store.dispatch("fetchMostPopular");
+    } else if (this.topicCollection === "Newest") {
+      this.$store.dispatch("fetchNewest");
+    } else if (this.topicCollection === "Recently Updated") {
+      this.$store.dispatch("fetchRecentlyUpdated");
     }
-else if (this.topicCollection === "Newest") {
-      const that = this;
-      axios
-        .get("https://kitsu.io/api/edge/anime?sort=-createdAt")
-        .then(function(response) {
-          that.data = response.data.data;
-          that.animeList[0].title = that.data[0].attributes.canonicalTitle;
-          that.animeList[0].poster = that.data[0].attributes.posterImage.small;
-          for (let i = 0; i < 6; i++) {}
-        });
-    }
-    else {
-      const that = this;
-      axios
-        .get("https://kitsu.io/api/edge/anime?sort=-updatedAt")
-        .then(function(response) {
-          that.data = response.data.data;
-          that.animeList[0].title = that.data[0].attributes.canonicalTitle;
-          that.animeList[0].poster = that.data[0].attributes.posterImage.small;
-          for (let i = 0; i < 6; i++) {}
-        });
+  },
+  computed: {
+    category() {
+      if (this.topicCollection === "Most Popular") {
+        return this.$store.state.home.mostPopular;
+      } else if (this.topicCollection === "Newest") {
+        return this.$store.state.home.newest;
+      } else {
+        return this.$store.state.home.recentlyUpdated;
+      }
     }
   }
 };

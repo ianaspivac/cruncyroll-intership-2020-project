@@ -5,10 +5,10 @@
     </div>
     <div class="container">
       <section id="hero-id">
-        <img :src='`${animeInfo.animeCover}`'>
+        <img :src="hero.image">
         <div class="container-hero">
-          <h1>{{animeInfo.animeTitle}}</h1>
-          <p>{{animeInfo.infoAbout}}</p>
+          <h1>{{hero.title}}</h1>
+          <p>{{hero.description}}</p>
           <button>View</button>
         </div>
       </section>
@@ -17,29 +17,15 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "HeroSection",
-  data: function() {
-    return {
-      animeInfo: {
-        animeCover: "",
-        animeTitle: "",
-        infoAbout: ""
-      }
-    };
-  },
   created: function() {
-    const that = this;
-    axios
-      .get("https://kitsu.io/api/edge/trending/anime")
-      .then(function(response) {
-        that.data = response.data.data[0].attributes;
-      that.animeInfo.animeCover = that.data.coverImage.small;
-       that.animeInfo.animeTitle = that.data.canonicalTitle;
-       that.animeInfo.infoAbout = that.data.description;
-     
-      });
+    this.$store.dispatch("fetchHero");
+  },
+  computed:{
+    hero(){
+      return this.$store.state.home.hero;
+    }
   }
 };
 </script>
@@ -105,18 +91,22 @@ object-fit: cover;
 #hero-id p,h1{
   overflow:hidden;
   overflow-wrap: break-word;
- 
   color:var(--color-text);
  
 }
 #hero-id p{
-   text-overflow: ellipsis;
+
+  text-overflow: ellipsis;
   font-size:calc(var(--title-hero) / 2);
   max-height:calc(var(--title-hero) * 7);
   text-align: left;
-  line-height:1.2;
   margin-left:var(--hero-text-align);
+  line-height:calc(var(--title-hero) / 2.1);
   padding:5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 20;
+  -webkit-box-orient: vertical;
+ 
 }
 #hero-id button{
   font-weight:600;
