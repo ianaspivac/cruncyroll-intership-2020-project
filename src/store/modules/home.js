@@ -8,7 +8,31 @@ const homeModule = {
       image: "",
       id: 0,
       slug: ""
-    }
+    },
+    mostPopular: {
+      title: "",
+      description: "",
+      image: "",
+      id: 0,
+      slug: ""
+    },
+    newest: {
+      title: "",
+      description: "",
+      image: "",
+      id: 0,
+      slug: ""
+    },
+    recentlyUpdated: {
+      title: "",
+      description: "",
+      image: "",
+      id: 0,
+      slug: ""
+    },
+mostPopularList:[],
+newestList:[],
+recentlyUpdatedList:[]
   }),
   mutations: {
     saveHero: function (state, { attributes, id }) {
@@ -27,7 +51,7 @@ const homeModule = {
         slug: attributes.slug,
         id: id
       };
-      console.log(state);
+      state.mostPopularList.push(state.mostPopular);
     },
     saveNewest(state, { attributes, id }) {
       state.newest = {
@@ -36,7 +60,7 @@ const homeModule = {
         slug: attributes.slug,
         id: id
       };
-      console.log(state);
+      state.newestList.push(state.newest);
     },
     saveRecentlyUpdated(state, { attributes, id }) {
       state.recentlyUpdated = {
@@ -45,7 +69,7 @@ const homeModule = {
         slug: attributes.slug,
         id: id
       };
-      console.log(state);
+state.recentlyUpdatedList.push(state.recentlyUpdated);
     }
   },
   actions: {
@@ -62,7 +86,8 @@ const homeModule = {
           "https://kitsu.io/api/edge/anime?page[limit]=6&page[offset]=0&sort=popularityRank"
         )
         .then(function ({ data }) {
-          context.commit("saveMostPopular", data.data[0]);
+          for(let i=0;i<6;i++){
+          context.commit("saveMostPopular", data.data[i]);}
         });
     },
     fetchNewest(context) {
@@ -71,7 +96,8 @@ const homeModule = {
           "https://kitsu.io/api/edge/anime?page[limit]=6&page[offset]=0&sort=-startDate"
         )
         .then(function ({ data }) {
-          context.commit("saveNewest", data.data[0]);
+          for(let j=0;j<6;j++){
+          context.commit("saveNewest", data.data[j]);}
         });
     },
     fetchRecentlyUpdated(context) {
@@ -80,7 +106,8 @@ const homeModule = {
           "https://kitsu.io/api/edge/anime?page[limit]=6&page[offset]=0&sort=-updatedAt"
         )
         .then(function ({ data }) {
-          context.commit("saveRecentlyUpdated", data.data[0]);
+          for(let k=0;k<6;k++){
+          context.commit("saveRecentlyUpdated", data.data[k]);}
         });
     }
   }

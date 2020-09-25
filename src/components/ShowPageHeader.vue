@@ -1,7 +1,7 @@
 <template>
   <div class="trailer-section">
-    <iframe
-      :src='"https://www.youtube.com/embed/"+`${trailer}`'
+    <iframe v-if='show.trailer !== ""'
+      :src='"https://www.youtube.com/embed/"+ show.trailer'
       frameborder="0"
       allow="accelerometer; 
       autoplay; 
@@ -15,10 +15,13 @@
 <script>
 export default {
   name: "ShowPageHeader",
-  data: function() {
-    return {
-      trailer: "eBwApg_nAvY"
-    };
+  created: function () {
+
+  },
+  computed: {
+    show() {
+      return this.$store.state.show.showDescription;
+    }
   }
 };
 </script>

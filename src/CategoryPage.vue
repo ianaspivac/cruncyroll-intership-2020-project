@@ -1,7 +1,7 @@
 <template>
   <div>
     <CategoryHeader :nameCategory="`${categoryType}`"/>
-    <CategoryCardsCollection :nameCategory="`${categoryType}`"/>
+    <CategoryCardsCollection :topicCollectionName="`${categoryType}`"/>
   </div>
 </template>
 

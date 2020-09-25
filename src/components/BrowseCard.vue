@@ -1,35 +1,34 @@
 <template>
-  <div>
-    <router-link to="/show-page">
+
+    <router-link :to="'/show-page/'+animeId">
       <div class="browse-card">
-        <img class="portrait" :src="`${animePoster}`" >
-        <div>{{animeTitle}}</div>
+        <img class="portrait" :src="`${animePoster}`" />
+        <div>{{ animeTitle }}</div>
       </div>
     </router-link>
-  </div>
+  
 </template>
 
 <script>
 export default {
   name: "BrowseCard",
-  data: function() {
-    return {
-      animeInfo: { browseCardImg: "", browseCardTitle: "" }
-    };
-  },
-  props: { animeTitle: String, animePoster: String },
-  created: function() {}
+  props: { animeTitle: String, animePoster: String, animeId: Number },
+  created: function () {
+    
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 .portrait {
   margin-top: 5px;
   width: 90%;
   height: 75%;
 }
 .browse-card {
+  margin:0;
   width: 139px;
   height: 220px;
   box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.58);

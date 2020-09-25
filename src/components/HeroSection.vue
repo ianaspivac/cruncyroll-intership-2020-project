@@ -5,11 +5,11 @@
     </div>
     <div class="container">
       <section id="hero-id">
-        <img :src="hero.image">
+        <img :src="hero.image" />
         <div class="container-hero">
-          <h1>{{hero.title}}</h1>
-          <p>{{hero.description}}</p>
-          <button>View</button>
+          <h1>{{ hero.title }}</h1>
+          <p>{{ hero.description }}</p>
+          <router-link :to="'/show-page/' + hero.id">View</router-link>
         </div>
       </section>
     </div>
@@ -19,11 +19,11 @@
 <script>
 export default {
   name: "HeroSection",
-  created: function() {
+  created: function () {
     this.$store.dispatch("fetchHero");
   },
-  computed:{
-    hero(){
+  computed: {
+    hero() {
       return this.$store.state.home.hero;
     }
   }
@@ -72,7 +72,7 @@ object-fit: cover;
 
 #hero-id {
   position: relative;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.493);
   min-height: 400px;
   background-size: cover;
   width:var(--total-width); 
@@ -91,7 +91,7 @@ object-fit: cover;
 #hero-id p,h1{
   overflow:hidden;
   overflow-wrap: break-word;
-  color:var(--color-text);
+  color:white;
  
 }
 #hero-id p{
@@ -104,15 +104,17 @@ object-fit: cover;
   line-height:calc(var(--title-hero) / 2.1);
   padding:5px;
   display: -webkit-box;
-  -webkit-line-clamp: 20;
+  -webkit-line-clamp: 15;
   -webkit-box-orient: vertical;
  
 }
-#hero-id button{
+#hero-id a{
+  text-decoration:none;
   font-weight:600;
   margin-top:10px;
-  width:8em;
-  height: 2.5em;
+  padding:10px;
+  width:5em;
+  height: 1em;
   margin-left:var(--hero-text-align);  
   border:0.1em solid white;
   border-radius:0.4em;
@@ -121,7 +123,7 @@ object-fit: cover;
   text-align:center;
   transition: all 0.15s;
 }
-#hero-id button:hover{
+#hero-id a:hover{
   cursor:pointer;
   background: rgba(61, 61, 61, 0.308);
   -webkit-box-shadow: 0px 0px 39px 2px rgba(255,255,255,1);

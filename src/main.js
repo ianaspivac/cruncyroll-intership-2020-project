@@ -17,7 +17,7 @@ const routes = [
   { path: "/most-popular", component: CategoryPage },
   { path: "/newest", component: CategoryPage },
   { path: "/recently-updated", component: CategoryPage },
-  { path: "/show-page", component: ShowPage }
+  { path: "/show-page/:id", component: ShowPage }
 ];
 const router = new VueRouter({
   mode: "history",

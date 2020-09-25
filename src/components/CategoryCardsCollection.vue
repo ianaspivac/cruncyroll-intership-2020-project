@@ -1,72 +1,37 @@
 <template>
   <div class="category-cards-collection">
     <BrowseCard
-      v-for="anime in animeList"
-      :key="anime.index"
-      :animeTitle="anime.title"
-      :animePoster="anime.poster"
+      :animeTitle="title"
+      :animePoster="image"
+      :animeId="1"
     ></BrowseCard>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import BrowseCard from "./BrowseCard.vue";
 export default {
   name: "CategoryCardsCollection",
   components: { BrowseCard },
-  props: { nameCategory: String },
-  data: function() {
-    return {
-      animeList: []
-    };
+  props: { topicCollectionName: String },
+  created: function () {
+    if (this.topicCollectionName === "Most Popular") {
+      this.$store.dispatch("fetchMostPopular");
+    } else if (this.topicCollectionName === "Newest") {
+      this.$store.dispatch("fetchNewest");
+    } else if (this.topicCollectionName === "Recently Updated") {
+      this.$store.dispatch("fetchRecentlyUpdated");
+    }
   },
-  created: function() {
-    if (this.nameCategory === "Most Popular") {
-      const that = this;
-      axios
-        .get("https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&sort=popularityRank")
-        .then(function(response) {
-          that.data = response.data.data;
-
-          for (var i = 0; i < 20; i++) {
-            that.animeList.push({
-              title: that.data[i].attributes.canonicalTitle,
-              poster: that.data[i].attributes.posterImage.small,
-              id: that.data[i].id
-            });
-          }
-        });
-    } else if (this.nameCategory === "Newest") {
-      const that = this;
-      axios
-        .get("https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&sort=-createdAt")
-        .then(function(response) {
-          that.data = response.data.data;
-
-          for (var i = 0; i < 20; i++) {
-            that.animeList.push({
-              title: that.data[i].attributes.canonicalTitle,
-              poster: that.data[i].attributes.posterImage.small,
-              id: that.data[i].id
-            });
-          }
-        });
-    } else if (this.nameCategory === "Recently Updated"){
-      const that = this;
-      axios
-        .get("https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&sort=-updatedAt")
-        .then(function(response) {
-          that.data = response.data.data;
-
-          for (var i = 0; i < 20; i++) {
-            that.animeList.push({
-              title: that.data[i].attributes.canonicalTitle,
-              poster: that.data[i].attributes.posterImage.small,
-              id: that.data[i].id
-            });
-          }
-        });
+  computed: {
+    animeList: function () {
+      if (this.topicCollectionName === "Most Popular") {
+        return this.$store.state.home.mostPopularList;
+      } else if (this.topicCollectionName === "Newest") {
+        return this.$store.state.home.newestList;
+      } else {
+        return this.$store.state.home.recentlyUpdatedList;
+      }
     }
   }
 };

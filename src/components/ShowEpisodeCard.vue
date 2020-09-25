@@ -1,11 +1,9 @@
 <template>
   <div class="show-episode-card">
-    <img
-      src="https://m.media-amazon.com/images/M/MV5BNTFkNGI0NTEtNzVmNS00MTBjLWJjZDItOWZkNjUzMjkxZWI2XkEyXkFqcGdeQVRoaXJkUGFydHlJbmdlc3Rpb25Xb3JrZmxvdw@@._V1_UX477_CR0,0,477,268_AL_.jpg"
-    >
+    <img :src="episodeThumbnail" />
     <div class="episode-info">
       <div>
-        Episode {{episodeNumber}}
+        Episode {{ episodeNumber }}
         <div class="episode-title">{{episodeTitle}}</div>
       </div>
     </div>
@@ -15,13 +13,8 @@
 <script>
 export default {
   name: "ShowEpisodeCard",
-  data: function() {
-    return {
-      episodeNumber: 1,
-      episodeTitle: "Title",
-      episodeHeader: "Episodes"
-    };
-  }
+  props:{episodeThumbnail:String,episodeNumber:Number,episodeTitle:String}
+  
 };
 </script>
 
@@ -37,6 +30,8 @@ height:200px;
   margin-top:10px;
   margin-bottom:10px;
 width:90%;
+max-height:130px;
+object-fit:cover;
 }
 .episode-info,.episode.title{
    white-space: nowrap;
@@ -44,8 +39,8 @@ width:90%;
   text-overflow: ellipsis;
   max-width:calc(var(--total-width) / 4 - 20px);
   max-height:40px;
+  line-height:17px;
   font-weight:1000;
-  line-height: 20px;
   text-align:left;
   margin-left:15px;
   font-size:15px;

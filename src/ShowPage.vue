@@ -19,7 +19,8 @@ export default {
     EpisodesCollection,
     MetaCardCollection,
     ShowPageHeader
-  }
+  },
+ 
 };
 </script>
 

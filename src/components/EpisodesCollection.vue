@@ -4,8 +4,7 @@
       <h2>Episodes</h2>
     </div>
     <div class="episode-cards-collection">
-      <ShowEpisodeCard/>
-      <ShowEpisodeCard/>
+      <ShowEpisodeCard v-if='episode.thumbnail !== ""' :episodeNumber="episode.number" :episodeTitle="episode.title" :episodeThumbnail="episode.thumbnail"/>
     </div>
   </div>
 </template>
@@ -14,7 +13,16 @@
 import ShowEpisodeCard from "./ShowEpisodeCard.vue";
 export default {
   name: "EpisodesCollection",
-  components: { ShowEpisodeCard }
+  components: { ShowEpisodeCard },
+  created: function () {
+   this.id=this.$route.params.id;
+    this.$store.dispatch("fetchEpisodes",{id:this.id});
+  },
+  computed: {
+    episode() {
+      return this.$store.state.show.episode;
+    }
+  }
 };
 </script>
 

@@ -1,8 +1,8 @@
 <template>
   <div class="collection-header">
-    <h2>{{topicCollectionName}}</h2>
+    <h2>{{ topicCollectionName }}</h2>
     <span class="see-more">
-      <router-link tag="span" to="/most-popular">See More ></router-link>
+      <router-link tag="span" :to="linkCategory">See More ></router-link>
     </span>
   </div>
 </template>
@@ -10,6 +10,17 @@
 <script>
 export default {
   name: "BrowseHeaderCollection",
+  computed: {
+    linkCategory: function () {
+      if (this.topicCollectionName === "Most Popular") {
+        return "/most-popular";
+      } else if (this.topicCollectionName === "Newest") {
+        return "/newest";
+      } else {
+        return "/recently-updated";
+      }
+    }
+  },
 
   props: {
     topicCollectionName: String
@@ -34,9 +45,9 @@ export default {
 .see-more {
   margin: 10px;
 }
-.collection-header h2{
+.collection-header h2 {
   text-align: left;
-  font-weight:1000;
+  font-weight: 1000;
 }
 
 .see-more {
@@ -44,6 +55,6 @@ export default {
   text-align: right;
 }
 .see-more:hover {
-  text-decoration:underline;
+  text-decoration: underline;
 }
 </style>

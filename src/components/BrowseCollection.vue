@@ -1,16 +1,14 @@
  <template>
-  <div class="box">
-    <section class="collection-container">
-      <BrowseHeaderCollection :topicCollectionName="topicCollection"/>
-      <div class="cards-container">
-        <BrowseCard
-          :animeTitle="category.title"
-          :animePoster="category.image"
-          :animeId="category.id"
-        />
-      </div>
-    </section>
-  </div>
+  <section class="collection-container">
+    <BrowseHeaderCollection :topicCollectionName="topicCollection" />
+    <div class="cards-container">
+      <BrowseCard v-for="anime in animeList" :key="anime.id" 
+        :animeTitle="anime.title"
+        :animePoster="anime.image"
+        :animeId="anime.id"
+      />
+    </div>
+  </section>
 </template>
 
 <script>
@@ -24,7 +22,7 @@ export default {
   },
   props: { topicCollection: String },
 
-  created: function() {
+  created: function () {
     if (this.topicCollection === "Most Popular") {
       this.$store.dispatch("fetchMostPopular");
     } else if (this.topicCollection === "Newest") {
@@ -34,13 +32,13 @@ export default {
     }
   },
   computed: {
-    category() {
+    animeList: function () {
       if (this.topicCollection === "Most Popular") {
-        return this.$store.state.home.mostPopular;
+        return this.$store.state.home.mostPopularList;
       } else if (this.topicCollection === "Newest") {
-        return this.$store.state.home.newest;
+        return this.$store.state.home.newestList;
       } else {
-        return this.$store.state.home.recentlyUpdated;
+        return this.$store.state.home.recentlyUpdatedList;
       }
     }
   }
@@ -49,25 +47,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
 .collection-container {
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   margin-top: 10px;
   margin-bottom: 10px;
-  width: var(--total-width);
+  max-width: var(--total-width);
 }
 .cards-container {
-  flex-wrap: wrap;
+  flex-direction: row;
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 100vw;
+  max-width: var(--total-width);
 }
 </style>

@@ -2,17 +2,17 @@
   <div>
     <div class="show-description-container">
       <div class="poster">
-        <img :src="`${cardImg}`" alt="Anime Poster">
+        <img :src="show.image" />
       </div>
       <div class="text-info">
         <div class="title">
-          <h1>{{cardTitle}}</h1>
+          <h1>{{ show.title }}</h1>
         </div>
         <div class="rating">
-          {{animeRating}}/10
-          <img src="../assets/star.png">
+          {{ show.rating }}/100
+          <img src="../assets/star.png" />
         </div>
-        <div class="synopsis">{{synopsis}}</div>
+        <div class="synopsis">{{ show.description }}</div>
       </div>
     </div>
   </div>
@@ -21,15 +21,14 @@
 <script>
 export default {
   name: "ShowDescriptionCard",
-  data: function() {
-    return {
-      cardImg:
-        "https://ae01.alicdn.com/kf/H0359877de5f54acb8a405aed761f45b0k.jpg",
-      cardTitle: "The Promised Neverland",
-      animeRating: 9,
-      synopsis:
-        "A group of the smartest kids at a seemingly perfect orphanage uncover its dark truth when they break a rule to never leave the orphanage grounds. Once the truth is discovered, they begin to plan an escape to save all of the children."
-    };
+  created: function () {
+    this.id = this.$route.params.id;
+    this.$store.dispatch("fetchShowDescription", { id: this.id });
+  },
+  computed: {
+    show() {
+      return this.$store.state.show.showDescription;
+    }
   }
 };
 </script>
@@ -43,7 +42,7 @@ width:97vw;
 text-align:left;
 margin-left:auto;
 margin-right:auto;
-height:300px;
+height:280px;
 max-width:var(--total-width);
 margin-top:10px;
 margin-bottom:10px;
@@ -54,7 +53,7 @@ display:flex;
 flex-direction: column;
 align-items:left;
 text-align:left;
-margin:10px;
+margin:5px;
 }
 .text-info .title{
 font-size:2em;
@@ -63,25 +62,43 @@ margin:10px;
 max-width:calc(var(--total-width) - 220px);
 background:var(--second-color);
 padding:5px;
+white-space: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+ display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 .text-info .rating, .text-info .synopsis{
-font-size:17px;
-margin:10px;
+font-size:15px;
+margin-left:15px;
+margin-right:15px;
+}
+.text-info .rating{
+margin-bottom:10px;
 }
 .text-info .synopsis{
-  max-height:130px;
+  max-height:190px;
+  line-height:19px;
   max-width:calc(var(--total-width) - 220px);
   white-space: break-word;
   overflow: hidden;
   text-overflow: ellipsis;
+   display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+
 }
 .poster img{
-  margin:15px;
+  
+margin:10px;
 height:90%;
+max-width:180px;
+object-fit:cover;
 
 }
 .poster{
-  width:220px;
+  width:190px;
 }
 .text-info .rating img{
 width:22px;
