@@ -2,7 +2,7 @@
   <section class="collection-container">
     <BrowseHeaderCollection :topicCollectionName="topicCollection" />
     <div class="cards-container">
-      <BrowseCard v-for="anime in animeList" :key="anime.id" 
+      <BrowseCard v-for="anime in animeList" :key="anime.index" 
         :animeTitle="anime.title"
         :animePoster="anime.image"
         :animeId="anime.id"

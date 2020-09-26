@@ -12,7 +12,7 @@
 <script>
 export default {
   name: "BrowseCard",
-  props: { animeTitle: String, animePoster: String, animeId: Number },
+  props: { animeTitle: String, animePoster: String, animeId: String },
   created: function () {
     
   }

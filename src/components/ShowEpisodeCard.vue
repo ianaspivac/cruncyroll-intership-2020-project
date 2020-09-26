@@ -1,25 +1,41 @@
 <template>
-  <div class="show-episode-card">
-    <img :src="episodeThumbnail" />
+<div class="container-episode">
+  <div v-for="episode in episodeList" :key="episode.id" class="show-episode-card">
+    <img :src="episode.thumbnail" />
     <div class="episode-info">
       <div>
-        Episode {{ episodeNumber }}
-        <div class="episode-title">{{episodeTitle}}</div>
+        Episode {{ episode.number }}
+        <div class="episode-title">{{episode.title}}</div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "ShowEpisodeCard",
-  props:{episodeThumbnail:String,episodeNumber:Number,episodeTitle:String}
+  props:{episodeThumbnail:String,episodeNumber:Number,episodeTitle:String},
+  created: function () {
+   this.id=this.$route.params.id;
+    this.$store.dispatch("fetchEpisodes",{id:this.id});
+  },
+  computed: {
+    episodeList() {
+      return this.$store.state.show.episodeList;
+    }
+  }
   
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.container-episode{
+display:flex;
+flex-wrap:wrap;
+max-width:var(--total-width);
+}
 .show-episode-card
 {margin:10px;
 box-shadow: 0px 5px 22px -9px rgba(0, 0, 0, 0.75);

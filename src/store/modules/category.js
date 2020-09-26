@@ -22,7 +22,10 @@ const categoryModule = {
       image: "",
       id: 0,
       slug: ""
-    }
+    },
+mostPopularList:[],
+newestList:[],
+recentlyUpdatedList:[]
   }),
   mutations: {
     saveMostPopular1(state, { attributes, id }) {
@@ -32,6 +35,7 @@ const categoryModule = {
         slug: attributes.slug,
         id: id
       }   
+      state.mostPopularList.push(state.mostPopular);
     },
     saveNewest1(state, { attributes, id }) {
       state.newest = {
@@ -40,6 +44,7 @@ const categoryModule = {
         slug: attributes.slug,
         id: id
       };
+      state.newestList.push(state.newest);
     },
     saveRecentlyUpdated1(state, { attributes, id }) {
       state.recentlyUpdated = {
@@ -48,6 +53,7 @@ const categoryModule = {
         slug: attributes.slug,
         id: id
       };
+      state.recentlyUpdatedList.push(state.recentlyUpdated);
     }
   },
   actions: {
@@ -58,7 +64,8 @@ const categoryModule = {
           "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&sort=popularityRank"
         )
         .then(function ({ data }) {
-          context.commit("saveMostPopular1", data.data[0]);
+          for(let i = 0;i<20;i++){
+          context.commit("saveMostPopular1", data.data[i]);}
         });
     },
     fetchNewest1(context) {
@@ -67,7 +74,8 @@ const categoryModule = {
           "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&sort=-startDate"
         )
         .then(function ({ data }) {
-          context.commit("saveNewest1", data.data[0]);
+          for(let i = 0;i<20;i++){
+          context.commit("saveNewest1", data.data[i]);}
         });
     },
     fetchRecentlyUpdated1(context) {
@@ -76,7 +84,8 @@ const categoryModule = {
           "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&sort=-updatedAt"
         )
         .then(function ({ data }) {
-          context.commit("saveRecentlyUpdated1", data.data[0]);
+          for(let i = 0;i<20;i++){
+          context.commit("saveRecentlyUpdated1", data.data[i]);}
         });
     }
   }

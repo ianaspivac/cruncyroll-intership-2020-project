@@ -16,7 +16,8 @@ const showModule = {
       title: "",
       number: 0,
       thumbnail: ""
-    }
+    },
+    episodeList: []
   }),
   mutations: {
     saveShowDescription: function (state, { attributes, id }) {
@@ -30,24 +31,16 @@ const showModule = {
         trailer: attributes.youtubeVideoId,
         nrEpisodes: attributes.episodeCount
       };
-      console.log(state.showDescription);
-      if (attributes.rating === null) {
-        state.showDescription = {
-          rating: 0
-        };
-      }
     },
     saveEpisodes: function (state, { attributes }) {
-      
-        state.episode = {
-          title: attributes.canonicalTitle,
-          number: attributes.number,
-          thumbnail: attributes.thumbnail.original
-        };
-    
-      
+      state.episode = {
+        title: attributes.canonicalTitle,
+        number: attributes.number,
+        thumbnail: attributes.thumbnail.original
+      };
+      state.episodeList.push(state.episode);
     },
-    saveNullEpisodes:function(state){   
+    saveNullEpisodes: function (state) {
       state.episode = {
         title: "",
         number: 0,
@@ -68,9 +61,9 @@ const showModule = {
       axios
         .get("https://kitsu.io/api/edge/anime/" + payload.id + "/episodes")
         .then(function ({ data }) {
-          
-          context.commit("saveEpisodes", data.data[0]);
-          
+          for (let i = 0; i < 10; i++) {
+            context.commit("saveEpisodes", data.data[i]);
+          }
         });
     }
   }

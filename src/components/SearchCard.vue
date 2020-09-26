@@ -1,20 +1,20 @@
 <template>
   <div class="search-card">
     <div class="left">
-      <img class="portrait" :src="`${browseCardImg}`" alt="Anime Poster">
+      <img class="portrait" :src="animeImage" alt="Anime Poster" />
       <div>
         <button>View</button>
       </div>
     </div>
     <div class="info-anime">
-      <div class="search-card-title">{{searchCardTitle}}</div>
-      <div>
-        <span class="rating">{{animeRating}}/10</span>
+      <div class="search-card-title">{{ animeTitle }}</div>
+      <div class="divRating">
+        {{ animeRating }}/100
         <span class="star">
-          <img src="../assets/star.png">
+          <img src="../assets/star.png" />
         </span>
       </div>
-      <div class="synopsis">{{synopsis}}</div>
+      <div class="synopsis">{{ animeDescription }}</div>
     </div>
   </div>
 </template>
@@ -22,15 +22,11 @@
 <script>
 export default {
   name: "SearchCard",
-  data: function() {
-    return {
-      browseCardImg:
-        "https://ae01.alicdn.com/kf/H0359877de5f54acb8a405aed761f45b0k.jpg",
-      searchCardTitle: "The Promised Neverland",
-      animeRating: 9,
-      synopsis:
-        "A group of the smartest kids at a seemingly perfect orphanage uncover its dark truth when they break a rule to never leave the orphanage grounds. Once the truth is discovered, they begin to plan an escape to save all of the children."
-    };
+  props: {
+    animeTitle: String,
+    animeDescription: String,
+    animeImage: String,
+    animeRating: String
   }
 };
 </script>
@@ -38,39 +34,42 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .left {
-  width: 30%;
+  width: 10em;
   align-content: center;
   justify-content: center;
   margin-right: 10px;
 }
 .portrait {
-  margin: 20px 5px 5px 10px;
-  max-height: 71%;
-  height: 30vh;
+  margin:15px 0 10px 5px;
+  height: 180px;
+  object-fit: cover;
+  max-width: 130px;
+}
+.portrait.img {
+  object-fit: cover;
+  max-width: 100px;
 }
 .search-card {
   display: flex;
-  max-width: 28em;
-  width:95vw;
-  height: 16em;
+  max-width: 450px;
+  width: 100%;
+  height: 250px;
   box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.58);
   color: rgb(0, 0, 0);
   margin: 5px;
-  
 }
 .info-anime {
-  margin-top: 10px;
   display: flex;
   align-content: left;
-  justify-content:center;
+  justify-content: center;
   flex-direction: column;
   text-align: left;
-  padding: 5px;
-  max-width: 300px;
+  max-width: 250px;
 }
-.rating {
+.divRating {
   height: 30px;
   font-size: 20px;
+  margin-bottom: 10px;
 }
 .star img {
   margin: 0;
@@ -78,7 +77,7 @@ export default {
 }
 
 .search-card button {
-  margin-left: 15px;
+  margin-left: 7px;
   cursor: pointer;
   width: 100px;
   height: 30px;
@@ -92,19 +91,27 @@ export default {
 }
 .info-anime .synopsis {
   font-size: 12px;
+  line-height: 13px;
   overflow: hidden;
   overflow-wrap: break-word;
   text-overflow: ellipsis;
   max-width: 280px;
-  height: 117px;
+  max-height: 90px;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
 }
 .info-anime .search-card-title {
   font-weight: 700;
   font-size: 20px;
-  height: 60px;
+  line-height: 21px;
+  height: 24px;
   overflow: hidden;
   overflow-wrap: break-word;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .search-card button:hover {

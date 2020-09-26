@@ -1,12 +1,12 @@
 <template>
   <div class="section-search-page-form">
     <div class="search-page-continer">
-      <form id="search-form">
+      <form id="search-form" @submit.prevent="onSubmit(search)">
         <div id="search-box-container">
       <input id="search-box" v-model="search" placeholder="Search">
       </div>
       <div class=submit-button>
-      <button type="submit"> 
+      <button type="submit" > 
         <img src="../assets/search-icon.png" alt="submit search"/>
         </button>
         </div>
@@ -18,10 +18,11 @@
 <script>
 export default {
   name: "SearchPageForm",
-  data:function(){
-return{
-
-};
+  methods:{
+onSubmit(search){
+  this.$store.dispatch("fetchSearchResult",{search:this.search});
+  }
+  
   }
 };
 </script>
@@ -36,7 +37,7 @@ height:50px;
 width:100%;
 }
 .search-page-continer{
-  margin-top:10px;
+margin-top:10px;
 display:flex;
 align-items: center;
 justify-content: center;
@@ -81,7 +82,6 @@ margin-top:1px;
   width:30px;
 }
 #search-box-container{
-  
   margin-left:-5px;
   height:30px;
   width:calc(var(--total-width) - 60px);

@@ -1,14 +1,13 @@
 <template>
-  
-    <div class="more-anime">
-      <div class="dark-shade">
-        <div class="more-anime-text">
-          <h2>Looking for more anime?</h2>Take a look at our full catalogue!
-        </div>
-        <button>Discover</button>
+  <div class="more-anime">
+    <div class="dark-shade">
+      <div class="more-anime-text">
+        <h2>Looking for more anime?</h2>
+        Take a look at our full catalogue!
       </div>
+      <div class="link">Discover</div>
     </div>
-  
+  </div>
 </template>
 
 <script>
@@ -19,7 +18,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .more-anime {
   margin-left: auto;
   margin-right: auto;
@@ -28,7 +26,7 @@ export default {
   background-size: cover;
   min-height: 400px;
   width: 100vw;
-  max-width:var(--total-width);
+  max-width: var(--total-width);
 }
 .more-anime-text {
   margin-top: 200px;
@@ -43,10 +41,13 @@ export default {
   position: absolute;
   background: rgba(0, 0, 0, 0.425);
 }
-.more-anime button {
+.more-anime .link {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
   margin-top: 15px;
-  width: 8em;
-  height: 2.5em;
+  width: 6em;
+  height: 2em;
   font-weight: 600;
   border: 0.1em solid white;
   border-radius: 0.4em;
@@ -56,7 +57,7 @@ export default {
   text-align: center;
   transition: all 0.15s;
 }
-.more-anime button:hover {
+.more-anime .link:hover {
   cursor: pointer;
   background: rgba(61, 61, 61, 0.308);
   box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 1);

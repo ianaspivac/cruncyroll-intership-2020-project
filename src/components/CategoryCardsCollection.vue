@@ -1,9 +1,10 @@
 <template>
   <div class="category-cards-collection">
     <BrowseCard
-      :animeTitle="title"
-      :animePoster="image"
-      :animeId="1"
+    v-for="anime in animeList" :key="anime.index"
+      :animeTitle="anime.title"
+      :animePoster="anime.image"
+      :animeId="anime.id"
     ></BrowseCard>
   </div>
 </template>
@@ -16,21 +17,21 @@ export default {
   props: { topicCollectionName: String },
   created: function () {
     if (this.topicCollectionName === "Most Popular") {
-      this.$store.dispatch("fetchMostPopular");
+      this.$store.dispatch("fetchMostPopular1");
     } else if (this.topicCollectionName === "Newest") {
-      this.$store.dispatch("fetchNewest");
+      this.$store.dispatch("fetchNewest1");
     } else if (this.topicCollectionName === "Recently Updated") {
-      this.$store.dispatch("fetchRecentlyUpdated");
+      this.$store.dispatch("fetchRecentlyUpdated1");
     }
   },
   computed: {
     animeList: function () {
       if (this.topicCollectionName === "Most Popular") {
-        return this.$store.state.home.mostPopularList;
+        return this.$store.state.category.mostPopularList;
       } else if (this.topicCollectionName === "Newest") {
-        return this.$store.state.home.newestList;
+        return this.$store.state.category.newestList;
       } else {
-        return this.$store.state.home.recentlyUpdatedList;
+        return this.$store.state.category.recentlyUpdatedList;
       }
     }
   }
