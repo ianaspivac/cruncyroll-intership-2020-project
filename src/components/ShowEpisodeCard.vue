@@ -25,7 +25,6 @@ export default {
       return this.$store.state.show.episodeList;
     }
   }
-  
 };
 </script>
 

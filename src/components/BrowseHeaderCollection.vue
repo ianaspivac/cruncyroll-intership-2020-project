@@ -12,13 +12,13 @@ export default {
   name: "BrowseHeaderCollection",
   computed: {
     linkCategory: function () {
-      if (this.topicCollectionName === "Most Popular") {
-        return "/most-popular";
-      } else if (this.topicCollectionName === "Newest") {
-        return "/newest";
-      } else {
-        return "/recently-updated";
-      }
+      switch(this.topicCollectionName){
+case "Most Popular":
+return "/most-popular";
+case "Newest":
+return "/newest";
+default:return "/recently-updated";
+      }  
     }
   },
 

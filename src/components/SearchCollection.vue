@@ -5,13 +5,29 @@
         <h2>Series</h2>
       </div>
       <div class="search-collection-container">
-        <SearchCard v-for="resultTv in resultTvList" :key="resultTv.id" :animeTitle="resultTv.title" :animeDescription="resultTv.description" :animeRating="resultTv.rating" :animeImage="resultTv.image" />
+        <SearchCard
+          v-for="resultTv in resultTvList"
+          :key="resultTv.id"
+          :animeTitle="resultTv.title"
+          :animeDescription="resultTv.description"
+          :animeRating="resultTv.rating"
+          :animeImage="resultTv.image"
+          :animeId="resultTv.id"
+        />
       </div>
       <div class="collection-header">
         <h2>Movies</h2>
       </div>
       <div class="search-collection-container">
-        <SearchCard v-for="resultMovie in resultMovieList" :key="resultMovie.id" :animeTitle="resultMovie.title" :animeDescription="resultMovie.description" :animeRating="resultMovie.rating" :animeImage="resultMovie.image" />
+        <SearchCard
+          v-for="resultMovie in resultMovieList"
+          :key="resultMovie.id"
+          :animeTitle="resultMovie.title"
+          :animeDescription="resultMovie.description"
+          :animeRating="resultMovie.rating"
+          :animeImage="resultMovie.image"
+          :animeId="resultMovie.id"
+        />
       </div>
     </section>
   </div>
@@ -24,7 +40,9 @@ export default {
   components: {
     SearchCard
   },
-  data:function(){return{submited:true}},
+  data: function () {
+    return { submited: true };
+  },
   computed: {
     resultTvList() {
       return this.$store.state.search.searchResultListTv;

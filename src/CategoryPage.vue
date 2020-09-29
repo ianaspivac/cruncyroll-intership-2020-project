@@ -17,6 +17,7 @@ export default {
   },
   components: { CategoryHeader, CategoryCardsCollection },
   created() {
+    this.$store.commit("deleteEpisodes");
     if (this.$route.path === "/newest") {
       this.categoryType = "Newest";
     } else if (this.$route.path === "/most-popular") {

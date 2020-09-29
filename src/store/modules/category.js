@@ -2,90 +2,67 @@ import axios from "axios";
 
 const categoryModule = {
   state: () => ({
-    mostPopular: {
+    card: {
       title: "",
       description: "",
       image: "",
       id: 0,
       slug: ""
     },
-    newest: {
-      title: "",
-      description: "",
-      image: "",
-      id: 0,
-      slug: ""
-    },
-    recentlyUpdated: {
-      title: "",
-      description: "",
-      image: "",
-      id: 0,
-      slug: ""
-    },
-mostPopularList:[],
-newestList:[],
-recentlyUpdatedList:[]
+    mostPopularList: [],
+    newestList: [],
+    recentlyUpdatedList: [],
+    allList: [],
+    categoryName: ""
   }),
   mutations: {
-    saveMostPopular1(state, { attributes, id }) {
-      state.mostPopular = {
-        title: attributes.canonicalTitle,
-        image: attributes.posterImage.small,
-        slug: attributes.slug,
-        id: id
-      }   
-      state.mostPopularList.push(state.mostPopular);
-    },
-    saveNewest1(state, { attributes, id }) {
-      state.newest = {
+    saveCategory(state, { attributes, id }) {
+      state.card = {
         title: attributes.canonicalTitle,
         image: attributes.posterImage.small,
         slug: attributes.slug,
         id: id
       };
-      state.newestList.push(state.newest);
-    },
-    saveRecentlyUpdated1(state, { attributes, id }) {
-      state.recentlyUpdated = {
-        title: attributes.canonicalTitle,
-        image: attributes.posterImage.small,
-        slug: attributes.slug,
-        id: id
-      };
-      state.recentlyUpdatedList.push(state.recentlyUpdated);
+      switch (state.categoryName) {
+        case "Most Popular":
+          state.mostPopularList.push(state.card);
+          break;
+        case "Newest":
+          state.newestList.push(state.card);
+          break;
+        case "Recently Updated":
+          state.recentlyUpdatedList.push(state.card);
+          break;
+        default:
+          state.allList.push(state.card);
+      }
     }
   },
   actions: {
-   
-    fetchMostPopular1(context) {
+    fetchCategory(context, payload) {
+      const collectionName = payload.collectionName;
+      if (collectionName === "Most Popular") {
+        this.category = "&sort=popularityRank";
+        context.state.categoryName = collectionName;
+      } else if (collectionName === "Newest") {
+        this.category = "&sort=-startDate";
+        context.state.categoryName = collectionName;
+      } else if (collectionName === "Recently Updated") {
+        this.category = "&sort=-updatedAt";
+        context.state.categoryName = collectionName;
+      } else {
+        this.category = "";
+      }
+
+      let offset = 0;
       axios
         .get(
-          "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&sort=popularityRank"
+          `https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=${offset}${this.category}`
         )
         .then(function ({ data }) {
-          for(let i = 0;i<20;i++){
-          context.commit("saveMostPopular1", data.data[i]);}
-        });
-    },
-    fetchNewest1(context) {
-      axios
-        .get(
-          "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&sort=-startDate"
-        )
-        .then(function ({ data }) {
-          for(let i = 0;i<20;i++){
-          context.commit("saveNewest1", data.data[i]);}
-        });
-    },
-    fetchRecentlyUpdated1(context) {
-      axios
-        .get(
-          "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&sort=-updatedAt"
-        )
-        .then(function ({ data }) {
-          for(let i = 0;i<20;i++){
-          context.commit("saveRecentlyUpdated1", data.data[i]);}
+          for (let i = 0; i < 20; i++) {
+            context.commit("saveCategory", data.data[i]);
+          }
         });
     }
   }

@@ -3,7 +3,7 @@
     <div class="left">
       <img class="portrait" :src="animeImage" alt="Anime Poster" />
       <div>
-        <button>View</button>
+        <router-link :to="'/show-page/'+animeId">View</router-link>
       </div>
     </div>
     <div class="info-anime">
@@ -26,7 +26,8 @@ export default {
     animeTitle: String,
     animeDescription: String,
     animeImage: String,
-    animeRating: String
+    animeRating: String,
+    animeId:String
   }
 };
 </script>
@@ -40,7 +41,7 @@ export default {
   margin-right: 10px;
 }
 .portrait {
-  margin:15px 0 10px 5px;
+  margin: 15px 0 10px 5px;
   height: 180px;
   object-fit: cover;
   max-width: 130px;
@@ -76,12 +77,14 @@ export default {
   width: 25px;
 }
 
-.search-card button {
+.search-card a {
+  text-decoration:none;
   margin-left: 7px;
   cursor: pointer;
   width: 100px;
+  padding:0 20px;
   height: 30px;
-  border: 0.1em solid black;
+  border: 1px solid black;
   border-radius: 0.4em;
   box-sizing: border-box;
   color: black;
@@ -114,7 +117,7 @@ export default {
   -webkit-box-orient: vertical;
 }
 
-.search-card button:hover {
+.search-card a:hover {
   box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.507);
 }
 </style>

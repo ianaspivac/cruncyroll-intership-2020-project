@@ -9,30 +9,17 @@ const homeModule = {
       id: 0,
       slug: ""
     },
-    mostPopular: {
+    card: {
       title: "",
       description: "",
       image: "",
       id: 0,
       slug: ""
     },
-    newest: {
-      title: "",
-      description: "",
-      image: "",
-      id: 0,
-      slug: ""
-    },
-    recentlyUpdated: {
-      title: "",
-      description: "",
-      image: "",
-      id: 0,
-      slug: ""
-    },
-mostPopularList:[],
-newestList:[],
-recentlyUpdatedList:[]
+    categoryName: "",
+    mostPopularList: [],
+    newestList: [],
+    recentlyUpdatedList: []
   }),
   mutations: {
     saveHero: function (state, { attributes, id }) {
@@ -44,32 +31,20 @@ recentlyUpdatedList:[]
         slug: attributes.slug
       };
     },
-    saveMostPopular(state, { attributes, id }) {
-      state.mostPopular = {
+    saveMiniCategory(state, { attributes, id }) {
+      state.card = {
         title: attributes.canonicalTitle,
         image: attributes.posterImage.small,
         slug: attributes.slug,
         id: id
       };
-      state.mostPopularList.push(state.mostPopular);
-    },
-    saveNewest(state, { attributes, id }) {
-      state.newest = {
-        title: attributes.canonicalTitle,
-        image: attributes.posterImage.small,
-        slug: attributes.slug,
-        id: id
-      };
-      state.newestList.push(state.newest);
-    },
-    saveRecentlyUpdated(state, { attributes, id }) {
-      state.recentlyUpdated = {
-        title: attributes.canonicalTitle,
-        image: attributes.posterImage.small,
-        slug: attributes.slug,
-        id: id
-      };
-state.recentlyUpdatedList.push(state.recentlyUpdated);
+      if (state.categoryName === "Most Popular") {
+        state.mostPopularList.push(state.card);
+      } else if (state.categoryName === "Newest") {
+        state.newestList.push(state.card);
+      } else if (state.categoryName === "Recently Updated") {
+        state.recentlyUpdatedList.push(state.card);
+      }
     }
   },
   actions: {
@@ -86,8 +61,10 @@ state.recentlyUpdatedList.push(state.recentlyUpdated);
           "https://kitsu.io/api/edge/anime?page[limit]=6&page[offset]=0&sort=popularityRank"
         )
         .then(function ({ data }) {
-          for(let i=0;i<6;i++){
-          context.commit("saveMostPopular", data.data[i]);}
+          context.state.categoryName = "Most Popular";
+          data.data.forEach((element) => {
+            context.commit("saveMiniCategory", element);
+          });
         });
     },
     fetchNewest(context) {
@@ -96,8 +73,10 @@ state.recentlyUpdatedList.push(state.recentlyUpdated);
           "https://kitsu.io/api/edge/anime?page[limit]=6&page[offset]=0&sort=-startDate"
         )
         .then(function ({ data }) {
-          for(let j=0;j<6;j++){
-          context.commit("saveNewest", data.data[j]);}
+          context.state.categoryName = "Newest";
+          data.data.forEach((element) => {
+            context.commit("saveMiniCategory", element);
+          });
         });
     },
     fetchRecentlyUpdated(context) {
@@ -106,11 +85,14 @@ state.recentlyUpdatedList.push(state.recentlyUpdated);
           "https://kitsu.io/api/edge/anime?page[limit]=6&page[offset]=0&sort=-updatedAt"
         )
         .then(function ({ data }) {
-          for(let k=0;k<6;k++){
-          context.commit("saveRecentlyUpdated", data.data[k]);}
+          context.state.categoryName = "Recently Updated";
+          data.data.forEach((element) => {
+            context.commit("saveMiniCategory", element);
+          });
         });
     }
   }
 };
 
 export default homeModule;
+/* */

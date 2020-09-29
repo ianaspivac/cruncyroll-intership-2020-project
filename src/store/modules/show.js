@@ -46,6 +46,14 @@ const showModule = {
         number: 0,
         thumbnail: ""
       };
+    },
+    saveCastings: function (state) {
+      state.cast = {};
+    },
+    deleteEpisodes: function (state) {
+    //  if (state.episodeList.size() > 0) {
+        console.log(state.episodeList);
+     
     }
   },
   actions: {
@@ -58,12 +66,29 @@ const showModule = {
         });
     },
     fetchEpisodes: function (context, payload) {
+      this.offset = 0;
+      const nrEpisodes = 1;
+      for (let i = 0; i < nrEpisodes; i++) {
+        axios
+          .get(
+            "https://kitsu.io/api/edge/anime/" +
+              payload.id +
+              "/episodes?page[limit]=10&page[offset]=" +
+              this.offset
+          )
+          .then(function ({ data }) {
+            for (let j = 0; j < 10; j++) {
+              context.commit("saveEpisodes", data.data[j]);
+            }
+          });
+        this.offset += 10;
+      }
+    },
+    fetchCast: function (context, payload) {
       axios
-        .get("https://kitsu.io/api/edge/anime/" + payload.id + "/episodes")
+        .get("https://kitsu.io/api/edge/anime/" + payload.id + "/castings")
         .then(function ({ data }) {
-          for (let i = 0; i < 10; i++) {
-            context.commit("saveEpisodes", data.data[i]);
-          }
+          context.commit("saveCastings", data.data[0]);
         });
     }
   }

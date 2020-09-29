@@ -9,10 +9,10 @@ const searchModule = {
       id: "",
       slug: "",
       rating: "",
-      subtype:""
+      subtype: ""
     },
-    searchResultListTv:[],
-    searchResultListMovie:[]
+    searchResultListTv: [],
+    searchResultListMovie: []
   }),
   mutations: {
     saveSearchResult: function (state, { attributes, id }) {
@@ -23,24 +23,29 @@ const searchModule = {
         id: id,
         rating: attributes.averageRating,
         slug: attributes.slug,
-        subtype:attributes.subtype
+        subtype: attributes.subtype
       };
-      if(state.searchResult.subtype === "movie"){
+      if (state.searchResult.subtype === "movie") {
         state.searchResultListMovie.push(state.searchResult);
-}
-else {state.searchResultListTv.push(state.searchResult);}
-console.log(state);
+      } else {
+        state.searchResultListTv.push(state.searchResult);
+      }
+      console.log(state);
     }
-    
   },
   actions: {
-    fetchSearchResult: function (context,payload) {
-      const searchText=payload.search;
+    fetchSearchResult: function (context, payload) {
+      //context.searchResultListTv.splice(0,context.searchResultListTv.length);
+      const searchText = payload.search;
       axios
-        .get("https://kitsu.io/api/edge/anime?filter%5Btext%5D=" + searchText)
+        .get(
+          "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&filter%5Btext%5D=" +
+            searchText
+        )
         .then(function ({ data }) {
-          for(let i = 0;i<data.data.length;i++){
-          context.commit("saveSearchResult", data.data[i]);}
+          for (let i = 0; i < data.data.length; i++) {
+            context.commit("saveSearchResult", data.data[i]);
+          }
         });
     }
   }

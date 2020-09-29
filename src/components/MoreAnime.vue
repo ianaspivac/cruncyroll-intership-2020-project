@@ -5,7 +5,7 @@
         <h2>Looking for more anime?</h2>
         Take a look at our full catalogue!
       </div>
-      <div class="link">Discover</div>
+      <router-link to="/all" class="link">Discover</router-link>
     </div>
   </div>
 </template>
@@ -34,6 +34,7 @@ export default {
   color: white;
   font-size: 1.4em;
   text-shadow: 0 0 0.1em rgb(255, 255, 255);
+  margin-bottom: 20px;
 }
 .dark-shade {
   width: 100%;
@@ -41,11 +42,11 @@ export default {
   position: absolute;
   background: rgba(0, 0, 0, 0.425);
 }
-.more-anime .link {
+a {
+  text-decoration: none;
   margin-left: auto;
   margin-right: auto;
   padding: 5px;
-  margin-top: 15px;
   width: 6em;
   height: 2em;
   font-weight: 600;
@@ -57,7 +58,7 @@ export default {
   text-align: center;
   transition: all 0.15s;
 }
-.more-anime .link:hover {
+a:hover {
   cursor: pointer;
   background: rgba(61, 61, 61, 0.308);
   box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 1);

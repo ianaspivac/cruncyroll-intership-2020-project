@@ -18,6 +18,9 @@ export default {
     HeroSection,
     BrowseCollection,
     MoreAnime
+  },
+  created(){
+    this.$store.commit("deleteEpisodes");
   }
 };
 </script>

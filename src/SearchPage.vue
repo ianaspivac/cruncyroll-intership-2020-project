@@ -12,6 +12,9 @@ export default {
   name: "SearchPage",
   components:{
     SearchPageForm,SearchCollection
+  },
+  created(){
+    this.$store.commit("deleteEpisodes");
   }
 };
 </script>

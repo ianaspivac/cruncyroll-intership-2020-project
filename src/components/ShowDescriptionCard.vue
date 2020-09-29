@@ -29,6 +29,9 @@ export default {
     show() {
       return this.$store.state.show.showDescription;
     }
+  },
+  unmounted() {
+    console.log("adios");
   }
 };
 </script>
