@@ -1,5 +1,6 @@
 <template>
-  <div v-if="submited" class="search-collection">
+<div>
+  <div class="search-collection">
     <section>
       <div class="collection-header">
         <h2>Series</h2>
@@ -30,6 +31,11 @@
         />
       </div>
     </section>
+   
+  </div>
+    <div class="button-container">
+    <button @click="moreAnime" class="more-button">MORE</button>
+  </div>
   </div>
 </template>
 
@@ -49,6 +55,13 @@ export default {
     },
     resultMovieList() {
       return this.$store.state.search.searchResultListMovie;
+    }
+  },
+  methods:{
+    moreAnime(){
+       this.$store.dispatch("fetchSearchResult", {
+      collectionName: this.topicCollectionName
+    });
     }
   }
 };
@@ -75,5 +88,23 @@ export default {
   padding: 0;
   margin: 10px;
   font-size: 25px;
+}
+.more-button {
+  text-decoration: none;
+  margin-left: 7px;
+  cursor: pointer;
+  width: 100px;
+  padding: 0 20px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 0.4em;
+  box-sizing: border-box;
+  color: black;
+  background: var(--transparent-text-background);
+  text-align: center;
+  transition: all 0.15s;
+}
+.more-button:hover {
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.507);
 }
 </style>

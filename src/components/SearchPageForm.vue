@@ -3,26 +3,27 @@
     <div class="search-page-continer">
       <form id="search-form" @submit.prevent="onSubmit(search)">
         <div id="search-box-container">
-      <input id="search-box" v-model="search" placeholder="Search">
-      </div>
-      <div class=submit-button>
-      <button type="submit" > 
-        <img src="../assets/search-icon.png" alt="submit search"/>
-        </button>
+          <input id="search-box" v-model="search" placeholder="Search" />
+        </div>
+        <div class="submit-button">
+          <button type="submit">
+            <img src="../assets/search-icon.png" alt="submit search" />
+          </button>
         </div>
       </form>
-      </div>
-   </div>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   name: "SearchPageForm",
-  methods:{
-onSubmit(search){
-  this.$store.dispatch("fetchSearchResult",{search:this.search});
-  }
-  
+  updated() {},
+  methods: {
+    onSubmit(search) {
+      this.$store.commit("eraseOffset");
+      this.$store.dispatch("fetchSearchResult", { search: this.search });
+    }
   }
 };
 </script>

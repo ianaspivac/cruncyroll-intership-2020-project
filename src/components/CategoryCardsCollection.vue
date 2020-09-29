@@ -22,7 +22,7 @@ export default {
   components: { BrowseCard },
   props: { topicCollectionName: String },
   created: function () {
-    this.$store.dispatch("fetchEraseOffset");
+    this.$store.commit("eraseOffset");
     this.$store.dispatch("fetchCategory", {
       collectionName: this.topicCollectionName
     });

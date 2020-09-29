@@ -1,7 +1,7 @@
 <template>
   <div>
     <SearchPageForm/>
-    <SearchCollection/>
+    <SearchCollection v-if="submit" />
    </div>
 </template>
 
@@ -13,8 +13,10 @@ export default {
   components:{
     SearchPageForm,SearchCollection
   },
-  created(){
-    this.$store.commit("deleteEpisodes");
+  computed:{
+submit(){
+   return this.$store.state.search.submited;
+}
   }
 };
 </script>

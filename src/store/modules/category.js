@@ -30,6 +30,13 @@ const categoryModule = {
         default:
           state.allList.push(card);
       }
+    },
+    eraseOffset(state) {
+      state.mostPopularList = [];
+      state.newestList = [];
+      state.recentlyUpdatedList = [];
+      state.allList = [];
+      state.offset = 0;
     }
   },
   actions: {
@@ -62,13 +69,7 @@ const categoryModule = {
         });
       context.state.offset += 12;
     },
-    fetchEraseOffset(context) {
-      context.state.mostPopularList = [];
-      context.state.newestList = [];
-      context.state.recentlyUpdatedList = [];
-      context.state.allList = [];
-      context.state.offset = 0;
-    }
+    
   }
 };
 
