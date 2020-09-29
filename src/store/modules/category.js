@@ -63,6 +63,10 @@ const categoryModule = {
       context.state.offset += 12;
     },
     fetchEraseOffset(context) {
+      context.state.mostPopularList = [];
+      context.state.newestList = [];
+      context.state.recentlyUpdatedList = [];
+      context.state.allList = [];
       context.state.offset = 0;
     }
   }
