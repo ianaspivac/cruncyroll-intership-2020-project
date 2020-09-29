@@ -2,35 +2,24 @@ import axios from "axios";
 
 const searchModule = {
   state: () => ({
-    searchResult: {
-      title: "",
-      description: "",
-      image: "",
-      id: "",
-      slug: "",
-      rating: "",
-      subtype: ""
-    },
     searchResultListTv: [],
     searchResultListMovie: []
   }),
   mutations: {
     saveSearchResult: function (state, { attributes, id }) {
-      state.searchResult = {
+      const searchResult = {
         title: attributes.canonicalTitle,
         description: attributes.description,
         image: attributes.posterImage.original,
         id: id,
         rating: attributes.averageRating,
-        slug: attributes.slug,
         subtype: attributes.subtype
       };
       if (state.searchResult.subtype === "movie") {
-        state.searchResultListMovie.push(state.searchResult);
+        state.searchResultListMovie.push(searchResult);
       } else {
-        state.searchResultListTv.push(state.searchResult);
+        state.searchResultListTv.push(searchResult);
       }
-      console.log(state);
     }
   },
   actions: {
@@ -43,9 +32,9 @@ const searchModule = {
             searchText
         )
         .then(function ({ data }) {
-          for (let i = 0; i < data.data.length; i++) {
-            context.commit("saveSearchResult", data.data[i]);
-          }
+          data.data.forEach((element) => {
+            context.commit("saveSearchResult", element);
+          });
         });
     }
   }

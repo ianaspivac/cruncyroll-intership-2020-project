@@ -9,19 +9,13 @@ const homeModule = {
       id: 0,
       slug: ""
     },
-    card: {
-      title: "",
-      description: "",
-      image: "",
-      id: 0,
-      slug: ""
-    },
     categoryName: "",
     mostPopularList: [],
     newestList: [],
     recentlyUpdatedList: []
   }),
   mutations: {
+    /*saving trending anime into state.hero */
     saveHero: function (state, { attributes, id }) {
       state.hero = {
         title: attributes.titles.en,
@@ -31,23 +25,28 @@ const homeModule = {
         slug: attributes.slug
       };
     },
+    /*data recived from api is saved,separated into lists by topic names */
     saveMiniCategory(state, { attributes, id }) {
-      state.card = {
+      const card = {
         title: attributes.canonicalTitle,
         image: attributes.posterImage.small,
         slug: attributes.slug,
         id: id
       };
-      if (state.categoryName === "Most Popular") {
-        state.mostPopularList.push(state.card);
-      } else if (state.categoryName === "Newest") {
-        state.newestList.push(state.card);
-      } else if (state.categoryName === "Recently Updated") {
-        state.recentlyUpdatedList.push(state.card);
+      switch (state.categoryName) {
+        case "Most Popular":
+          state.mostPopularList.push(card);
+          break;
+        case "Newest":
+          state.newestList.push(card);
+          break;
+        default:
+          state.recentlyUpdatedList.push(card);
       }
     }
   },
   actions: {
+    /*getting info about trending anime */
     fetchHero: function (context) {
       axios
         .get("https://kitsu.io/api/edge/trending/anime")
@@ -55,7 +54,9 @@ const homeModule = {
           context.commit("saveHero", data.data[0]);
         });
     },
+    /* action gets first 6 popular animes */
     fetchMostPopular(context) {
+      context.state.mostPopularList = [];
       axios
         .get(
           "https://kitsu.io/api/edge/anime?page[limit]=6&page[offset]=0&sort=popularityRank"
@@ -67,7 +68,9 @@ const homeModule = {
           });
         });
     },
+    /* action gets first 6 newesr animes */
     fetchNewest(context) {
+      context.state.newest = [];
       axios
         .get(
           "https://kitsu.io/api/edge/anime?page[limit]=6&page[offset]=0&sort=-startDate"
@@ -79,7 +82,9 @@ const homeModule = {
           });
         });
     },
+    /* action gets first 6 recently updated animes */
     fetchRecentlyUpdated(context) {
+      context.state.recentlyUpdated = [];
       axios
         .get(
           "https://kitsu.io/api/edge/anime?page[limit]=6&page[offset]=0&sort=-updatedAt"
@@ -95,4 +100,3 @@ const homeModule = {
 };
 
 export default homeModule;
-/* */

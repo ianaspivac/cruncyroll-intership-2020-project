@@ -1,23 +1,23 @@
 <template>
   <div>
-    <CategoryHeader :nameCategory="`${categoryType}`"/>
-    <CategoryCardsCollection :topicCollectionName="`${categoryType}`"/>
+    <CategoryHeader :nameCategory="`${categoryType}`" />
+    <CategoryCardsCollection :topicCollectionName="`${categoryType}`" />
   </div>
 </template>
 
 <script>
 import CategoryCardsCollection from "./components/CategoryCardsCollection.vue";
 import CategoryHeader from "./components/CategoryHeader.vue";
+import MoreButton from "./components/MoreButton";
 export default {
   name: "CategoryPage",
-  data: function() {
+  data: function () {
     return {
       categoryType: ""
     };
   },
-  components: { CategoryHeader, CategoryCardsCollection },
+  components: { CategoryHeader, CategoryCardsCollection, MoreButton },
   created() {
-    this.$store.commit("deleteEpisodes");
     if (this.$route.path === "/newest") {
       this.categoryType = "Newest";
     } else if (this.$route.path === "/most-popular") {

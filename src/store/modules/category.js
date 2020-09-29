@@ -2,22 +2,16 @@ import axios from "axios";
 
 const categoryModule = {
   state: () => ({
-    card: {
-      title: "",
-      description: "",
-      image: "",
-      id: 0,
-      slug: ""
-    },
     mostPopularList: [],
     newestList: [],
     recentlyUpdatedList: [],
     allList: [],
-    categoryName: ""
+    categoryName: "",
+    offset: 0
   }),
   mutations: {
     saveCategory(state, { attributes, id }) {
-      state.card = {
+      const card = {
         title: attributes.canonicalTitle,
         image: attributes.posterImage.small,
         slug: attributes.slug,
@@ -25,21 +19,22 @@ const categoryModule = {
       };
       switch (state.categoryName) {
         case "Most Popular":
-          state.mostPopularList.push(state.card);
+          state.mostPopularList.push(card);
           break;
         case "Newest":
-          state.newestList.push(state.card);
+          state.newestList.push(card);
           break;
         case "Recently Updated":
-          state.recentlyUpdatedList.push(state.card);
+          state.recentlyUpdatedList.push(card);
           break;
         default:
-          state.allList.push(state.card);
+          state.allList.push(card);
       }
     }
   },
   actions: {
     fetchCategory(context, payload) {
+      //to add as mutation
       const collectionName = payload.collectionName;
       if (collectionName === "Most Popular") {
         this.category = "&sort=popularityRank";
@@ -54,16 +49,21 @@ const categoryModule = {
         this.category = "";
       }
 
-      let offset = 0;
+      this.offset = context.state.offset;
       axios
         .get(
-          `https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=${offset}${this.category}`
+          `https://kitsu.io/api/edge/anime?page[limit]=12&page[offset]=${this.offset}${this.category}`
         )
         .then(function ({ data }) {
-          for (let i = 0; i < 20; i++) {
-            context.commit("saveCategory", data.data[i]);
-          }
+          console.log(data.data);
+          data.data.forEach((element) => {
+            context.commit("saveCategory", element);
+          });
         });
+      context.state.offset += 12;
+    },
+    fetchEraseOffset(context) {
+      context.state.offset = 0;
     }
   }
 };

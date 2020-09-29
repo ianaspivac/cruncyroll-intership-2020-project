@@ -12,13 +12,14 @@ export default {
   name: "BrowseHeaderCollection",
   computed: {
     linkCategory: function () {
-      switch(this.topicCollectionName){
-case "Most Popular":
-return "/most-popular";
-case "Newest":
-return "/newest";
-default:return "/recently-updated";
-      }  
+      switch (this.topicCollectionName) {
+        case "Most Popular":
+          return "/most-popular";
+        case "Newest":
+          return "/newest";
+        default:
+          return "/recently-updated";
+      }
     }
   },
 
