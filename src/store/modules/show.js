@@ -12,12 +12,12 @@ const showModule = {
       trailer: "",
       nrEpisodes: 0
     },
-    episode: {
-      title: "",
-      number: 0,
-      thumbnail: ""
-    },
-    episodeList: []
+    idAnime: 0,
+    episodeList: [],
+    offset: 0,
+    showButton: true,
+    characters: [],
+    casts: []
   }),
   mutations: {
     saveShowDescription: function (state, { attributes, id }) {
@@ -28,61 +28,105 @@ const showModule = {
         id: id,
         rating: attributes.averageRating,
         slug: attributes.slug,
-        trailer: attributes.youtubeVideoId,
-        nrEpisodes: attributes.episodeCount
+        trailer: attributes.youtubeVideoId
       };
     },
     saveEpisodes: function (state, { attributes }) {
-      state.episode = {
+      const episode = {
         title: attributes.canonicalTitle,
         number: attributes.number,
         thumbnail: attributes.thumbnail.original
       };
-      state.episodeList.push(state.episode);
+      state.episodeList.push(episode);
+      state.idAnime = state.showDescription.id;
     },
-    saveNullEpisodes: function (state) {
-      state.episode = {
-        title: "",
-        number: 0,
-        thumbnail: ""
+    saveCharacter: function (state, { attributes, id }) {
+      const character = {
+        name: attributes.canonicalName,
+        image: attributes.image.original
       };
+      state.characters.push(character);
+    },
+    saveCasts(state, { name }) {
+      const nameCast = name;
+      state.casts.push(nameCast);
+      console.log(state.casts);
+    },
+    clearOffset(state) {
+      state.episodeList = [];
+      state.offset = 0;
     },
     saveCastings: function (state) {
       state.cast = {};
+    },
+    hideMoreButton(state) {
+      state.showButton = false;
     }
   },
+
   actions: {
     fetchShowDescription: function (context, payload) {
       const id = payload.id;
+
       axios
-        .get("https://kitsu.io/api/edge/anime?filter[id]=" + id)
+        .get(`https://kitsu.io/api/edge/anime?filter[id]=${id}`)
         .then(function ({ data }) {
           context.commit("saveShowDescription", data.data[0]);
         });
     },
     fetchEpisodes: function (context, payload) {
-      context.state.episodeList = [];
-      this.offset = 0;
+      const id = payload.id;
+      this.offset = context.state.offset;
       axios
         .get(
-          "https://kitsu.io/api/edge/anime/" +
-            payload.id +
-            "/episodes?page[limit]=10&page[offset]=" +
-            this.offset
+          `https://kitsu.io/api/edge/anime/${id}/episodes?page[limit]=12&page[offset]=${this.offset}`
         )
         .then(function ({ data }) {
           data.data.forEach((episode) => {
             context.commit("saveEpisodes", episode);
           });
+          if (data.data.length < 12) {
+            context.commit("hideMoreButton");
+          }
         });
-      this.offset += 10;
+      context.state.offset += 12;
     },
-    fetchCast: function (context, payload) {
-      axios
-        .get("https://kitsu.io/api/edge/anime/" + payload.id + "/castings")
-        .then(function ({ data }) {
-          context.commit("saveCastings", data.data[0]);
+    fetchCharacter: function (context, payload) {
+      const charactersUrl = `https://kitsu.io/api/edge/anime/${payload.id}/characters`;
+
+      axios.get(charactersUrl).then((response) => {
+        response.data.data.forEach((character) => {
+          axios
+            .get(
+              `https://kitsu.io/api/edge/media-characters/${character.id}/character`
+            )
+            .then(({ data }) => {
+              /* const dataCharacter={
+                genreal:data.data,
+                castName:""
+              }*/
+              // context.commit("saveCharacter", data.data);
+              const castsUrl = data.data.relationships.castings.links.related;
+              axios
+                .get(`${castsUrl}?filter[language]=Japanese`)
+                .then(({ data }) => {
+                  if (data.data.length !== 0) {
+                    const castUrl =
+                      data.data[0].relationships.person.links.related;
+                    axios.get(`${castUrl}`).then(({ data }) => {
+                      /*
+                      dataCharacter.castName=data.data.attributes.name;
+                       context.commit("saveCharacter",dataCharcter)
+                       */
+                      context.commit("saveCasts", data.data.attributes);
+                    });
+                  } else {
+                    context.commit("saveCasts", "");
+                  }
+                });
+            });
         });
+      });
     }
   }
 };

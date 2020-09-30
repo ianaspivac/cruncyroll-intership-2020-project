@@ -1,11 +1,14 @@
 <template>
-  <div class="collection-episodes-section">
-    <div class="episodes-header">
-      <h2>Episodes</h2>
+  <div>
+    <div class="collection-episodes-section">
+      <div class="episodes-header">
+        <h2>Episodes</h2>
+      </div>
+      <div class="episode-cards-collection">
+        <ShowEpisodeCard />
+      </div>
     </div>
-    <div class="episode-cards-collection">
-      <ShowEpisodeCard  />
-    </div>
+    <button v-if="showButton" @click="moreAnime" class="more-button">MORE</button>
   </div>
 </template>
 
@@ -13,7 +16,21 @@
 import ShowEpisodeCard from "./ShowEpisodeCard.vue";
 export default {
   name: "EpisodesCollection",
-  components: { ShowEpisodeCard }
+  components: { ShowEpisodeCard },
+  created() {
+    this.$store.commit("clearOffset");
+  },
+  methods: {
+    moreAnime() {
+      this.id=this.$route.params.id;
+      this.$store.dispatch("fetchEpisodes",{id:this.id});
+    }
+  },
+  computed:{
+showButton(){
+return this.$store.state.show.showButton;
+}
+  }
 };
 </script>
 
@@ -31,7 +48,7 @@ export default {
   margin: 10px;
   font-size: 20px;
   text-align: left;
-  font-weight:1000;
+  font-weight: 1000;
 }
 .episode-cards-collection {
   display: flex;
@@ -39,5 +56,27 @@ export default {
   align-content: center;
   align-items: center;
   flex-wrap: wrap;
+}
+.button-container {
+  margin-left: auto;
+  margin-right: auto;
+}
+.more-button {
+  text-decoration: none;
+  margin-left: 7px;
+  cursor: pointer;
+  width: 100px;
+  padding: 0 20px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 0.4em;
+  box-sizing: border-box;
+  color: black;
+  background: var(--transparent-text-background);
+  text-align: center;
+  transition: all 0.15s;
+}
+.more-button:hover {
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.507);
 }
 </style>

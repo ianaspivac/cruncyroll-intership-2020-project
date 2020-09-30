@@ -23,6 +23,7 @@ export default {
   props: { topicCollection: String },
 
   created: function () {
+    this.$store.commit("clearList");
     if (this.topicCollection === "Most Popular") {
       this.$store.dispatch("fetchMostPopular");
     } else if (this.topicCollection === "Newest") {

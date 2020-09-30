@@ -1,13 +1,12 @@
 <template>
   <div class="show-episode-card">
     <img
-      src="https://img.discogs.com/aIvmyjPAsJXKfCG739oBw85WuOQ=/fit-in/300x300/filters:strip_icc():format(jpeg):mode_rgb():quality(40)/discogs-images/A-2064545-1508873646-6197.jpeg.jpg"
-      alt="cast"
+      :src="imageCharacter"
     >
     <div class="cast-info">
-      {{nameCast}}
+      {{nameCharacter}}
       <br>
-      {{role}}
+      {{nameCast}}
     </div>
   </div>
 </template>
@@ -15,9 +14,8 @@
 <script>
 export default {
   name: "MetaCard",
-  data: function() {
-    return { nameCast: "Mariya Ise", role: "Name" };
-  }
+  props:{nameCharacter:String,imageCharacter:String,nameCast:String}
+ 
 };
 </script>
 
@@ -35,6 +33,7 @@ height:150px;
 margin:10px;
 height:87%;
 object-fit:cover;
+width:100px;
 }
 .cast-info{
    white-space: wrap;

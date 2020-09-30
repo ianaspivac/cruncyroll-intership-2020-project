@@ -43,6 +43,11 @@ const homeModule = {
         default:
           state.recentlyUpdatedList.push(card);
       }
+    },
+    clearList(state) {
+      state.recentlyUpdatedList = [];
+      state.mostPopularList = [];
+      state.newestList = [];
     }
   },
   actions: {
@@ -56,7 +61,6 @@ const homeModule = {
     },
     /* action gets first 6 popular animes */
     fetchMostPopular(context) {
-      context.state.mostPopularList = [];
       axios
         .get(
           "https://kitsu.io/api/edge/anime?page[limit]=6&page[offset]=0&sort=popularityRank"
@@ -70,7 +74,6 @@ const homeModule = {
     },
     /* action gets first 6 newesr animes */
     fetchNewest(context) {
-      context.state.newest = [];
       axios
         .get(
           "https://kitsu.io/api/edge/anime?page[limit]=6&page[offset]=0&sort=-startDate"
@@ -84,7 +87,6 @@ const homeModule = {
     },
     /* action gets first 6 recently updated animes */
     fetchRecentlyUpdated(context) {
-      context.state.recentlyUpdated = [];
       axios
         .get(
           "https://kitsu.io/api/edge/anime?page[limit]=6&page[offset]=0&sort=-updatedAt"

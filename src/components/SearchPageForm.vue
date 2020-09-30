@@ -1,7 +1,7 @@
 <template>
   <div class="section-search-page-form">
     <div class="search-page-continer">
-      <form id="search-form" @submit.prevent="onSubmit(search)">
+      <form id="search-form" @submit.prevent="onSubmit()">
         <div id="search-box-container">
           <input id="search-box" v-model="search" placeholder="Search" />
         </div>
@@ -18,9 +18,12 @@
 <script>
 export default {
   name: "SearchPageForm",
+  data: () => ({
+    search: ""
+  }),
   updated() {},
   methods: {
-    onSubmit(search) {
+    onSubmit() {
       this.$store.commit("eraseOffset");
       this.$store.dispatch("fetchSearchResult", { search: this.search });
     }

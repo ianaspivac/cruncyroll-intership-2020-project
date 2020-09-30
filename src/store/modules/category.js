@@ -17,6 +17,7 @@ const categoryModule = {
         slug: attributes.slug,
         id: id
       };
+
       switch (state.categoryName) {
         case "Most Popular":
           state.mostPopularList.push(card);
@@ -43,6 +44,7 @@ const categoryModule = {
     fetchCategory(context, payload) {
       //to add as mutation
       const collectionName = payload.collectionName;
+
       if (collectionName === "Most Popular") {
         this.category = "&sort=popularityRank";
         context.state.categoryName = collectionName;
@@ -53,7 +55,8 @@ const categoryModule = {
         this.category = "&sort=-updatedAt";
         context.state.categoryName = collectionName;
       } else {
-        this.category = "";
+        this.category = ``;
+        context.state.categoryName = collectionName;
       }
 
       this.offset = context.state.offset;
@@ -68,8 +71,7 @@ const categoryModule = {
           });
         });
       context.state.offset += 12;
-    },
-    
+    }
   }
 };
 
