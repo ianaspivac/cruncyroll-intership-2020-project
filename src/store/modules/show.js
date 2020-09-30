@@ -40,10 +40,11 @@ const showModule = {
       state.episodeList.push(episode);
       state.idAnime = state.showDescription.id;
     },
-    saveCharacter: function (state, { attributes, id }) {
+    saveCharacter: function (state, { general, castName }) {
       const character = {
-        name: attributes.canonicalName,
-        image: attributes.image.original
+        name: general.canonicalName,
+        image: general.image.original,
+        cast: castName
       };
       state.characters.push(character);
     },
@@ -101,11 +102,10 @@ const showModule = {
               `https://kitsu.io/api/edge/media-characters/${character.id}/character`
             )
             .then(({ data }) => {
-              /* const dataCharacter={
-                genreal:data.data,
-                castName:""
-              }*/
-              // context.commit("saveCharacter", data.data);
+              const dataCharacter = {
+                general: data.data.attributes,
+                castName: ""
+              };
               const castsUrl = data.data.relationships.castings.links.related;
               axios
                 .get(`${castsUrl}?filter[language]=Japanese`)
@@ -114,14 +114,11 @@ const showModule = {
                     const castUrl =
                       data.data[0].relationships.person.links.related;
                     axios.get(`${castUrl}`).then(({ data }) => {
-                      /*
-                      dataCharacter.castName=data.data.attributes.name;
-                       context.commit("saveCharacter",dataCharcter)
-                       */
-                      context.commit("saveCasts", data.data.attributes);
+                      dataCharacter.castName = data.data.attributes.name;
+                      context.commit("saveCharacter", dataCharacter);
                     });
                   } else {
-                    context.commit("saveCasts", "");
+                    context.commit("saveCharacter", dataCharacter);
                   }
                 });
             });

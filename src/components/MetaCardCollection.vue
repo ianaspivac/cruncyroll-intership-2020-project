@@ -4,8 +4,13 @@
       <h2>Cast</h2>
     </div>
     <div class="meta-cards-collection">
-      <MetaCard v-for="character in characters" :key="character.index" :nameCharacter="character.name" :imageCharacter="character.image" 
-      :nameCast="casts[5]" />
+      <MetaCard
+        v-for="character in characters"
+        :key="character.index"
+        :nameCharacter="character.name"
+        :imageCharacter="character.image"
+        :nameCast="character.cast"
+      />
     </div>
   </div>
 </template>
@@ -15,16 +20,18 @@ import MetaCard from "./MetaCard.vue";
 export default {
   name: "MetaCardCollection",
   components: { MetaCard },
-  created(){
-    this.$store.dispatch("fetchCharacter",{id:this.$store.state.show.showDescription.id});
+  created() {
+    this.$store.dispatch("fetchCharacter", {
+      id: this.$store.state.show.showDescription.id
+    });
   },
-   computed:{
-characters(){
-  return this.$store.state.show.characters;
-},
-casts(){
-  return this.$store.state.show.casts;
-}
+  computed: {
+    characters() {
+      return this.$store.state.show.characters;
+    },
+    casts() {
+      return this.$store.state.show.casts;
+    }
   }
 };
 </script>
