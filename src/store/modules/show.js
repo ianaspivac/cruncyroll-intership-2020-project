@@ -10,16 +10,18 @@ const showModule = {
       slug: "",
       rating: 0,
       trailer: "",
-      nrEpisodes: 0
+      subtype: ""
     },
     idAnime: 0,
     episodeList: [],
     offset: 0,
-    showButton: true,
+    offsetCharacter: 0,
+    showButton: true, //control more button for episodes
     characters: [],
-    casts: []
+    characterButton: true //control more button for characters
   }),
   mutations: {
+    //saving info about anime
     saveShowDescription: function (state, { attributes, id }) {
       state.showDescription = {
         title: attributes.canonicalTitle,
@@ -27,10 +29,11 @@ const showModule = {
         image: attributes.posterImage.original,
         id: id,
         rating: attributes.averageRating,
-        slug: attributes.slug,
-        trailer: attributes.youtubeVideoId
+        trailer: attributes.youtubeVideoId,
+        subtype: attributes.subtype
       };
     },
+    //saving info about episodes
     saveEpisodes: function (state, { attributes }) {
       const episode = {
         title: attributes.canonicalTitle,
@@ -40,6 +43,7 @@ const showModule = {
       state.episodeList.push(episode);
       state.idAnime = state.showDescription.id;
     },
+    //saving info about characters
     saveCharacter: function (state, { general, castName }) {
       const character = {
         name: general.canonicalName,
@@ -48,24 +52,24 @@ const showModule = {
       };
       state.characters.push(character);
     },
-    saveCasts(state, { name }) {
-      const nameCast = name;
-      state.casts.push(nameCast);
-      console.log(state.casts);
-    },
+    //clearing lists to avoid dublication
     clearOffset(state) {
       state.episodeList = [];
       state.offset = 0;
+      state.offsetCharacter = 0;
+      state.characters = [];
     },
-    saveCastings: function (state) {
-      state.cast = {};
-    },
+    //control of "more" button
     hideMoreButton(state) {
       state.showButton = false;
+    },
+    hideCharacterMoreButton(state) {
+      state.characterButton = false;
     }
   },
 
   actions: {
+    //getting description about anime
     fetchShowDescription: function (context, payload) {
       const id = payload.id;
 
@@ -75,6 +79,7 @@ const showModule = {
           context.commit("saveShowDescription", data.data[0]);
         });
     },
+    //getting anime's episode's title and thumbnail
     fetchEpisodes: function (context, payload) {
       const id = payload.id;
       this.offset = context.state.offset;
@@ -92,10 +97,17 @@ const showModule = {
         });
       context.state.offset += 12;
     },
+    //getting data about character and voice actors
     fetchCharacter: function (context, payload) {
-      const charactersUrl = `https://kitsu.io/api/edge/anime/${payload.id}/characters`;
+      this.offset = context.state.offsetCharacter;
+      //getting all anime's characters
+      const charactersUrl = `https://kitsu.io/api/edge/anime/${payload.id}/characters?page[limit]=10&page[offset]=${this.offset}`;
 
       axios.get(charactersUrl).then((response) => {
+        if (response.data.data.length < 10) {
+          context.commit("hideCharacterMoreButton");
+        }
+        //getting info about each character
         response.data.data.forEach((character) => {
           axios
             .get(
@@ -106,7 +118,9 @@ const showModule = {
                 general: data.data.attributes,
                 castName: ""
               };
+
               const castsUrl = data.data.relationships.castings.links.related;
+              //getting info only about japanese voice actors
               axios
                 .get(`${castsUrl}?filter[language]=Japanese`)
                 .then(({ data }) => {
@@ -124,6 +138,8 @@ const showModule = {
             });
         });
       });
+
+      context.state.offsetCharacter += 10;
     }
   }
 };

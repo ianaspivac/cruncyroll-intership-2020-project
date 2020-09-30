@@ -24,9 +24,10 @@ export default {
   props: { topicCollectionName: String },
   created: function () {
     this.$store.commit("eraseOffset");
-    this.$store.dispatch("fetchCategory", {
+    this.$store.commit("whichCategory", {
       collectionName: this.topicCollectionName
     });
+    this.$store.dispatch("fetchCategory");
   },methods:{
     moreAnime(){
        this.$store.dispatch("fetchCategory", {

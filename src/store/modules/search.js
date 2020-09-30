@@ -7,6 +7,7 @@ const searchModule = {
     offset: 0,
     submited: false
   }),
+  //saving search results
   mutations: {
     saveSearchResult: function (state, { attributes, id }) {
       const searchResult = {
@@ -17,22 +18,26 @@ const searchModule = {
         rating: attributes.averageRating,
         subtype: attributes.subtype
       };
+      //save to movie and tv list separately
       if (searchResult.subtype === "movie") {
         state.searchResultListMovie.push(searchResult);
       } else {
         state.searchResultListTv.push(searchResult);
       }
     },
+    //cleaning data to avoid dublication
     eraseOffset(state) {
       state.searchResultListTv = [];
       state.searchResultListMovie = [];
       state.offset = 0;
-      state.submited=false;
+      state.submited = false;
     },
+    //if the submision was made,search results and the subtype headers appear
     stateSubmited(state) {
       state.submited = true;
     }
   },
+  //getting data
   actions: {
     fetchSearchResult: function (context, payload) {
       context.commit("stateSubmited");
