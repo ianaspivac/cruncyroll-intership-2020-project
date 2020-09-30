@@ -51,11 +51,9 @@ export default {
 
 <style scoped>
 .collection-container {
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
   flex-direction: column;
-  margin: 10px 0 10px 0;
+  margin: 10px auto 10px auto;
   max-width: var(--total-width);
 }
 .cards-container {
