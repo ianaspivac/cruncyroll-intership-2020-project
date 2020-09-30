@@ -1,12 +1,11 @@
+//Anime character card
 <template>
   <div class="show-episode-card">
-    <img
-      :src="imageCharacter"
-    >
+    <img :src="imageCharacter" />
     <div class="cast-info">
-      {{nameCharacter}}
-      <br>
-      {{nameCast}}
+      {{ nameCharacter }}
+      <br />
+      {{ nameCast }}
     </div>
   </div>
 </template>
@@ -14,12 +13,12 @@
 <script>
 export default {
   name: "MetaCard",
-  props:{nameCharacter:String,imageCharacter:String,nameCast:String}
- 
+  props: { nameCharacter: String,
+   imageCharacter: String, 
+   nameCast: String }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .show-episode-card
 {

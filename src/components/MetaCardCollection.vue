@@ -1,17 +1,27 @@
+//Collection of anime character cards
 <template>
-  <div class="collection-meta-section">
-    <div class="meta-header">
-      <h2>Cast</h2>
+  <div>
+    <div class="collection-meta-section">
+      <div class="meta-header">
+        <h2>Cast</h2>
+      </div>
+      <div class="meta-cards-collection">
+        <MetaCard
+          v-for="character in characters"
+          :key="character.index"
+          :nameCharacter="character.name"
+          :imageCharacter="character.image"
+          :nameCast="character.cast"
+        />
+      </div>
     </div>
-    <div class="meta-cards-collection">
-      <MetaCard
-        v-for="character in characters"
-        :key="character.index"
-        :nameCharacter="character.name"
-        :imageCharacter="character.image"
-        :nameCast="character.cast"
-      />
-    </div>
+    <button
+      v-if="this.$store.state.show.characterButton"
+      @click="moreCharacters"
+      class="more-button"
+    >
+      MORE
+    </button>
   </div>
 </template>
 
@@ -21,8 +31,9 @@ export default {
   name: "MetaCardCollection",
   components: { MetaCard },
   created() {
+    this.$store.commit("clearOffset");
     this.$store.dispatch("fetchCharacter", {
-      id: this.$store.state.show.showDescription.id
+      id: this.idAnime
     });
   },
   computed: {
@@ -31,12 +42,21 @@ export default {
     },
     casts() {
       return this.$store.state.show.casts;
+    },
+    idAnime() {
+      return this.$route.params.id;
+    }
+  },
+  methods: {
+    moreCharacters() {
+      this.$store.dispatch("fetchCharacter", {
+        id: this.idAnime
+      });
     }
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .collection-meta-section {
   flex-direction: column;
@@ -58,5 +78,27 @@ export default {
   align-content: center;
   align-items: center;
   flex-wrap: wrap;
+}
+.button-container {
+  margin-left: auto;
+  margin-right: auto;
+}
+.more-button {
+  text-decoration: none;
+  margin-left: 7px;
+  cursor: pointer;
+  width: 100px;
+  padding: 0 20px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 0.4em;
+  box-sizing: border-box;
+  color: black;
+  background: var(--transparent-text-background);
+  text-align: center;
+  transition: all 0.15s;
+}
+.more-button:hover {
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.507);
 }
 </style>

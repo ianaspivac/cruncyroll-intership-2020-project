@@ -1,3 +1,4 @@
+//Search card with description,name,title
 <template>
   <div class="search-card">
     <div class="left">

@@ -1,8 +1,11 @@
+ //Browse card which is presented in collections at home page
  <template>
   <section class="collection-container">
     <BrowseHeaderCollection :topicCollectionName="topicCollection" />
     <div class="cards-container">
-      <BrowseCard v-for="anime in animeList" :key="anime.index" 
+      <BrowseCard
+        v-for="anime in animeList"
+        :key="anime.index"
         :animeTitle="anime.title"
         :animePoster="anime.image"
         :animeId="anime.id"
@@ -46,15 +49,13 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .collection-container {
   margin-left: auto;
   margin-right: auto;
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0 10px 0;
   max-width: var(--total-width);
 }
 .cards-container {

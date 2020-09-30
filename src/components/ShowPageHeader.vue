@@ -1,3 +1,4 @@
+//Trailer for anime in the top of show page
 <template>
   <div class="trailer-section">
     <iframe v-if='show.trailer !== ""'
@@ -16,7 +17,6 @@
 export default {
   name: "ShowPageHeader",
   created: function () {
-
   },
   computed: {
     show() {
@@ -26,11 +26,10 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .trailer-section iframe {
   margin-top: 10px;
-margin-bottom: 10px;
+  margin-bottom: 10px;
   width: 97vw;
   height: 400px;
   object-fit: cover;

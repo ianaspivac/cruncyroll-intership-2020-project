@@ -8,7 +8,6 @@
 <script>
 import CategoryCardsCollection from "./components/CategoryCardsCollection.vue";
 import CategoryHeader from "./components/CategoryHeader.vue";
-import MoreButton from "./components/MoreButton";
 export default {
   name: "CategoryPage",
   data: function () {
@@ -16,7 +15,7 @@ export default {
       categoryType: ""
     };
   },
-  components: { CategoryHeader, CategoryCardsCollection, MoreButton },
+  components: { CategoryHeader, CategoryCardsCollection },
   created() {
     if (this.$route.path === "/newest") {
       this.categoryType = "Newest";

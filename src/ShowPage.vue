@@ -1,9 +1,11 @@
 <template>
   <div>
-    <ShowPageHeader/>
-    <ShowDescriptionCard/>
-    <EpisodesCollection/>
-    <MetaCardCollection/>
+    <ShowPageHeader />
+    <ShowDescriptionCard />
+    <EpisodesCollection
+      v-if="this.$store.state.show.showDescription.subtype === 'TV'"
+    />
+    <MetaCardCollection />
   </div>
 </template>
 
@@ -19,9 +21,10 @@ export default {
     EpisodesCollection,
     MetaCardCollection,
     ShowPageHeader
+  },
+  created() {
+    this.$store.commit("clearOffset");
   }
-  
- 
 };
 </script>
 

@@ -1,3 +1,4 @@
+//Collection of episode cards
 <template>
   <div>
     <div class="collection-episodes-section">
@@ -8,7 +9,9 @@
         <ShowEpisodeCard />
       </div>
     </div>
-    <button v-if="showButton" @click="moreAnime" class="more-button">MORE</button>
+    <button v-if="showButton" @click="moreAnime" class="more-button">
+      MORE
+    </button>
   </div>
 </template>
 
@@ -17,24 +20,20 @@ import ShowEpisodeCard from "./ShowEpisodeCard.vue";
 export default {
   name: "EpisodesCollection",
   components: { ShowEpisodeCard },
-  created() {
-    this.$store.commit("clearOffset");
-  },
   methods: {
     moreAnime() {
-      this.id=this.$route.params.id;
-      this.$store.dispatch("fetchEpisodes",{id:this.id});
+      this.id = this.$route.params.id;
+      this.$store.dispatch("fetchEpisodes", { id: this.id });
     }
   },
-  computed:{
-showButton(){
-return this.$store.state.show.showButton;
-}
+  computed: {
+    showButton() {
+      return this.$store.state.show.showButton;
+    }
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .collection-episodes-section {
   flex-direction: column;

@@ -1,3 +1,4 @@
+//Headers for home page collections
 <template>
   <div class="collection-header">
     <h2>{{ topicCollectionName }}</h2>
@@ -29,7 +30,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .collection-header {
   display: flex;

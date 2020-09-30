@@ -13,16 +13,13 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .category-header {
   display: flex;
   justify-content: center;
   align-content: center;
   align-items: center;
-  padding: 0;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin: 10px 0 10px 0;
   margin-left: auto;
   margin-right: auto;
   max-width: var(--total-width);

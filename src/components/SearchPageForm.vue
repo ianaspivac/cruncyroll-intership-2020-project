@@ -1,3 +1,4 @@
+//Form for search page
 <template>
   <div class="section-search-page-form">
     <div class="search-page-continer">
@@ -31,7 +32,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .section-search-page-form{
 display:flex;
