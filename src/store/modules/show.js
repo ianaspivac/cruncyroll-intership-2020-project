@@ -47,9 +47,12 @@ const showModule = {
     saveCharacter: function (state, { general, castName }) {
       const character = {
         name: general.canonicalName,
-        image: general.image.original,
+        image: "https://sisterhoodofstyle.com/wp-content/uploads/2018/02/no-image-1.jpg",
         cast: castName
       };
+      if(general.image !== null){
+      character.image = general.image.original     
+      ;}
       state.characters.push(character);
     },
     //clearing lists to avoid dublication
@@ -101,10 +104,10 @@ const showModule = {
     fetchCharacter: function (context, payload) {
       this.offset = context.state.offsetCharacter;
       //getting all anime's characters
-      const charactersUrl = `https://kitsu.io/api/edge/anime/${payload.id}/characters?page[limit]=10&page[offset]=${this.offset}`;
+      const charactersUrl = `https://kitsu.io/api/edge/anime/${payload.id}/characters?page[limit]=12&page[offset]=${this.offset}`;
 
       axios.get(charactersUrl).then((response) => {
-        if (response.data.data.length < 10) {
+        if (response.data.data.length < 12) {
           context.commit("hideCharacterMoreButton");
         }
         //getting info about each character
@@ -139,7 +142,7 @@ const showModule = {
         });
       });
 
-      context.state.offsetCharacter += 10;
+      context.state.offsetCharacter += 12;
     }
   }
 };
