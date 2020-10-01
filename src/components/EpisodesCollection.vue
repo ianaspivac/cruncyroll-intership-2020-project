@@ -1,6 +1,6 @@
 //Collection of episode cards
 <template>
-  <div>
+  <div >
     <div class="collection-episodes-section">
       <div class="episodes-header">
         <h2>Episodes</h2>

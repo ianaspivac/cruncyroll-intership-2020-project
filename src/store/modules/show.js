@@ -38,8 +38,12 @@ const showModule = {
       const episode = {
         title: attributes.canonicalTitle,
         number: attributes.number,
-        thumbnail: attributes.thumbnail.original
+        thumbnail:
+          "https://sisterhoodofstyle.com/wp-content/uploads/2018/02/no-image-1.jpg"
       };
+      if (attributes.thumbnail !== null) {
+        episode.thumbnail = attributes.thumbnail.original;
+      }
       state.episodeList.push(episode);
       state.idAnime = state.showDescription.id;
     },
@@ -47,16 +51,19 @@ const showModule = {
     saveCharacter: function (state, { general, castName }) {
       const character = {
         name: general.canonicalName,
-        image: "https://sisterhoodofstyle.com/wp-content/uploads/2018/02/no-image-1.jpg",
+        image:
+          "https://sisterhoodofstyle.com/wp-content/uploads/2018/02/no-image-1.jpg",
         cast: castName
       };
-      if(general.image !== null){
-      character.image = general.image.original     
-      ;}
+      if (general.image !== null) {
+        character.image = general.image.original;
+      }
       state.characters.push(character);
     },
     //clearing lists to avoid dublication
     clearOffset(state) {
+      state.characterButton = true;
+      state.showButton = true;
       state.episodeList = [];
       state.offset = 0;
       state.offsetCharacter = 0;
@@ -88,17 +95,17 @@ const showModule = {
       this.offset = context.state.offset;
       axios
         .get(
-          `https://kitsu.io/api/edge/anime/${id}/episodes?page[limit]=12&page[offset]=${this.offset}`
+          `https://kitsu.io/api/edge/anime/${id}/episodes?page[limit]=8&page[offset]=${this.offset}`
         )
         .then(function ({ data }) {
           data.data.forEach((episode) => {
             context.commit("saveEpisodes", episode);
           });
-          if (data.data.length < 12) {
+          if (data.data.length < 8) {
             context.commit("hideMoreButton");
           }
         });
-      context.state.offset += 12;
+      context.state.offset += 8;
     },
     //getting data about character and voice actors
     fetchCharacter: function (context, payload) {

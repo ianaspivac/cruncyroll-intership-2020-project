@@ -1,6 +1,6 @@
 //Collection of anime character cards
 <template>
-  <div>
+  <div v-if="isFull">
     <div class="collection-meta-section">
       <div class="meta-header">
         <h2>Cast</h2>
@@ -45,6 +45,12 @@ export default {
     },
     idAnime() {
       return this.$route.params.id;
+    },
+    isFull() {
+      if (this.$store.state.show.characters.length !== 0) {
+        return true;
+      }
+      return false;
     }
   },
   methods: {
