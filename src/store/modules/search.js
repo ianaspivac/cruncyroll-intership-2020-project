@@ -38,20 +38,30 @@ const searchModule = {
     //if the submision was made,search results and the subtype headers appear
     stateSubmited(state) {
       state.submited = true;
+    },
+    getSearchText(state, payload) {
+      state.searchText = payload;
+    },
+    noResults(state) {
+      state.submited = false;
     }
   },
   //getting data
   actions: {
-    fetchSearchResult: function (context, payload) {
+    fetchSearchResult: function (context) {
       context.commit("stateSubmited");
       this.offset = context.state.offset;
-      const searchText = payload.search;
+      const searchText = context.state.searchText;
+      context.state.searchResultListTv = [];
+      context.state.searchResultListMovie = [];
       axios
         .get(
-          "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0&filter%5Btext%5D=" +
-            searchText
+          `https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=${this.offset}&filter%5Btext%5D=${searchText}`
         )
         .then(function ({ data }) {
+          if (data.data < 20) {
+            context.commit("noResults");
+          }
           data.data.forEach((element) => {
             context.commit("saveSearchResult", element);
           });

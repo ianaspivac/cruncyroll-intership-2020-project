@@ -22,11 +22,11 @@ export default {
   data: () => ({
     search: ""
   }),
-  updated() {},
   methods: {
     onSubmit() {
+      this.$store.commit("getSearchText",this.search);
       this.$store.commit("eraseOffset");
-      this.$store.dispatch("fetchSearchResult", { search: this.search });
+      this.$store.dispatch("fetchSearchResult");
     }
   }
 };
