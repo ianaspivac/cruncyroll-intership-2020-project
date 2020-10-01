@@ -28,10 +28,13 @@ const showModule = {
         description: attributes.description,
         image: attributes.posterImage.original,
         id: id,
-        rating: attributes.averageRating,
+        rating: "?",
         trailer: attributes.youtubeVideoId,
         subtype: attributes.subtype
       };
+      if (attributes.averageRating !== null){
+        state.showDescription.rating=attributes.averageRating;
+      }
     },
     //saving info about episodes
     saveEpisodes: function (state, { attributes }) {

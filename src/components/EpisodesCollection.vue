@@ -1,6 +1,6 @@
 //Collection of episode cards
 <template>
-  <div >
+  <div v-if="isFull">
     <div class="collection-episodes-section">
       <div class="episodes-header">
         <h2>Episodes</h2>
@@ -29,6 +29,12 @@ export default {
   computed: {
     showButton() {
       return this.$store.state.show.showButton;
+    },
+    isFull() {
+      if (this.$store.state.show.episodeList.length !== 0) {
+        return true;
+      }
+      return false;
     }
   }
 };

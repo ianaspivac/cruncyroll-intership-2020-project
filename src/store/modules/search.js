@@ -15,9 +15,12 @@ const searchModule = {
         description: attributes.description,
         image: attributes.posterImage.original,
         id: id,
-        rating: attributes.averageRating,
+        rating: "?",
         subtype: attributes.subtype
       };
+      if (attributes.averageRating != null) {
+        searchResult.rating = attributes.averageRating;
+      }
       //save to movie and tv list separately
       if (searchResult.subtype === "movie") {
         state.searchResultListMovie.push(searchResult);
