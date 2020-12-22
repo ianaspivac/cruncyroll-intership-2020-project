@@ -12,7 +12,7 @@
       <div class="divRating">
         {{ animeRating }}/100
         <span class="star">
-          <img src="../assets/star.png" />
+          ⭐
         </span>
       </div>
       <div class="synopsis">{{ animeDescription }}</div>

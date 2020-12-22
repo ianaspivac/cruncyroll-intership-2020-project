@@ -11,7 +11,7 @@
         </div>
         <div class="rating">
           {{ show.rating }}/100
-          <img src="../assets/star.png" />
+          ⭐
         </div>
         <div class="synopsis">{{ show.description }}</div>
       </div>
