@@ -6,9 +6,7 @@ node_modules
 # local env files
 .env.local
 .env.*.local
-.browserslistrc
-.eslintrc.js
-babel.config.js
+
 # Log files
 npm-debug.log*
 yarn-debug.log*
